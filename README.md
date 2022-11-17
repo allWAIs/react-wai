@@ -16,7 +16,7 @@ This repository maintains the WAI-ARIA Authoring Practices Guide (APG). React WA
 - [ ] Feed
 - [ ] Grids : Interactive Tabular Data and Layout Containers
 - [ ] Landmarks
-- [ ] Link
+- [x] Link
 - [ ] Listbox
 - [ ] Menu or Menu bar
 - [ ] Menu Button
