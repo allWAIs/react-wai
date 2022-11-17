@@ -6,12 +6,10 @@
 /* exported goToLink */
 
 export function goToLink(event, url) {
-  let type = event.type;
+  if (event.key !== 'Enter' && event.type !== 'click') return;
+  
+  window.location.href = url;
 
-  if (type === 'click' || (type === 'keydown' && event.keyCode === 13)) {
-    window.location.href = url;
-
-    event.preventDefault();
-    event.stopPropagation();
-  }
+  event.preventDefault();
+  event.stopPropagation();
 }
