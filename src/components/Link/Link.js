@@ -31,7 +31,7 @@ const StyledLinkImg = styled.img`
   text-decoration: underline;
 `;
 
-export function Link({ as = ComponentName, alt, src, href, children }) {
+export function Link({ as, alt, src, href, children }) {
   return (
     <>
       {as === 'img' ? (
