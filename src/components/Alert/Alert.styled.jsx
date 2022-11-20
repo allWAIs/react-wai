@@ -15,10 +15,8 @@ const StyledAlert = styled.div`
 
 export function Alert({ width, height, children }) {
   return (
-    <>
-      <StyledAlert role="alert" style={{ width, height }}>
-        {children}
-      </StyledAlert>
-    </>
+    <StyledAlert role="alert" style={{ width, height }}>
+      {children}
+    </StyledAlert>
   );
 }
