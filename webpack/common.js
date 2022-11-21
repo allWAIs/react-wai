@@ -6,6 +6,7 @@ import { createHtmlPlugin } from './plugins/index.js';
 const commonConfig = {
   target: ['browserslist'],
   resolve: {
+    modules: ['node_modules', 'stories'],
     extensions: ['.jsx', '.js', '.json', '.wasm'],
     alias: {
       '@': resolve('src'),
