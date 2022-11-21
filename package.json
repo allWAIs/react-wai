@@ -10,7 +10,9 @@
   "scripts": {
     "start": "webpack build --progress -c webpack/dev.js --open",
     "build": "webpack build --progress -c webpack/dev.js",
-    "dev": "webpack server --progress -c webpack/dev.js"
+    "dev": "webpack server --progress -c webpack/dev.js",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "repository": {
     "type": "git",
@@ -24,7 +26,19 @@
   },
   "homepage": "https://github.com/allWAIs/react-wai#readme",
   "devDependencies": {
+    "@babel/core": "^7.20.2",
+    "@storybook/addon-actions": "^6.5.13",
+    "@storybook/addon-essentials": "^6.5.13",
+    "@storybook/addon-interactions": "^6.5.13",
+    "@storybook/addon-links": "^6.5.13",
+    "@storybook/builder-webpack4": "^6.5.13",
+    "@storybook/builder-webpack5": "^6.5.13",
+    "@storybook/manager-webpack4": "^6.5.13",
+    "@storybook/manager-webpack5": "^6.5.13",
+    "@storybook/react": "^6.5.13",
+    "@storybook/testing-library": "^0.0.13",
     "@svgr/webpack": "6.5.1",
+    "babel-loader": "^8.3.0",
     "clean-webpack-plugin": "4.0.0",
     "cross-env": "7.0.3",
     "esbuild-loader": "2.20.0",
