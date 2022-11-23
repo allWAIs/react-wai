@@ -1,1 +1,2 @@
-export { Test } from './Test'
+export { Test } from './Test';
+export * from './Alert/index';
