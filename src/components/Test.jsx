@@ -30,14 +30,26 @@ export function Test() {
           <Tab>Taab2</Tab>
         </TabList>
         <TabPanel as="ul">
-          <li>리스트 탭 아이템1</li>
-          <li>리스트 탭 아이템2</li>
-          <li>리스트 탭 아이템3</li>
+          <li>
+            <a href="#">리스트 탭 아이템1</a>
+          </li>
+          <li>
+            <a href="#">리스트 탭 아이템2</a>
+          </li>
+          <li>
+            <a href="#">리스트 탭 아이템3</a>
+          </li>
         </TabPanel>
         <TabPanel as="ol">
-          <li>리스트 탭 아이템1</li>
-          <li>리스트 탭 아이템2</li>
-          <li>리스트 탭 아이템3</li>
+          <li>
+            <a href="#">리스트 탭 아이템1</a>
+          </li>
+          <li>
+            <a href="#">리스트 탭 아이템2</a>
+          </li>
+          <li>
+            <a href="#">리스트 탭 아이템3</a>
+          </li>
         </TabPanel>
       </TabMenu>
     </>
