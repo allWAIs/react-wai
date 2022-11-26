@@ -1,7 +1,4 @@
-import styled from 'styled-components';
-import theme from '../utils/theme';
-import { Alert } from './Alert/index';
-import React, { children, useState } from 'react';
+import { Title } from './Title';
 // import addIcon from './../assets/icon/Icon-add.svg'
 // import {ReactComponent as CheckIcon} from './../assets/icon/Icon-check.svg'
 
@@ -13,23 +10,14 @@ import React, { children, useState } from 'react';
 // `
 
 export function Test() {
-  const [alert, setAlert] = useState(false);
-
-  const showAlert = () => {
-    setAlert(!alert);
-  };
-
   return (
     <>
-      <button className="trigger" onClick={showAlert}>
-        example
-      </button>
-      {alert && (
-        <Alert width="300px" height="100px">
-          내용을 입력하세요😊
-        </Alert>
-      )}
-      <button>1</button>
+      <Title>기본값</Title>
+      <Title lv={1}>헤딩 레벨 1</Title>
+      <Title lv={3} focusable={true}>
+        헤딩 레벨 3 포커스 가능
+      </Title>
+      <Title hidden>접근성 숨김을 적용한 헤딩 태그</Title>
     </>
   );
 }
