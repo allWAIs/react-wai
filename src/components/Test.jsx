@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Tab, TabGroup, TabList, TabMenu, TabPanel } from './TabMenu';
 import { Title } from './Title/Title';
 
