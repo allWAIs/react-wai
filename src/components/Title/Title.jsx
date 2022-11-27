@@ -30,8 +30,17 @@ Title.defaultProps = {
 const { oneOf, bool, node } = PropTypes;
 
 Title.propTypes = {
+  /**
+   헤딩 레벨 결정
+   */
   lv: oneOf([1, 2, 3, 4, 5, 6, '1', '2', '3', '4', '5', '6']),
+  /**
+   접근성 숨김 여부
+   */
   hidden: bool,
+  /**
+   포커스 가능 여부
+   */
   focusable: bool,
   children: node.isRequired,
 };

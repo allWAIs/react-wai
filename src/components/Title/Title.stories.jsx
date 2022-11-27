@@ -8,6 +8,13 @@ export default {
     hidden: false,
     focusable: false,
   },
+  parameters: {
+    docs: {
+      description: {
+        component: '헤딩 컴포넌트',
+      },
+    },
+  },
 };
 
 const Template = (args) => <Title {...args} />;
