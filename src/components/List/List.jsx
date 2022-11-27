@@ -61,7 +61,13 @@ List.defaultProps = {
   direction: 'row',
 };
 List.propTypes = {
+  /**
+   리스트 형식
+   */
   as: PropTypes.oneOf(['ul', 'ol']),
+  /**
+   리스트 방향. 해당 값에 따라 방향키 네비게이션이 달라짐
+   */
   direction: PropTypes.oneOf(['row', 'col']),
   children: PropTypes.node,
 };
@@ -71,5 +77,4 @@ const StyledList = styled.ul`
   flex-direction: ${({ $d }) => ($d === 'row' ? 'row' : 'column')};
   justify-content: ${({ $d }) => ($d === 'row' ? 'space-between' : 'center')};
   align-items: ${({ $d }) => ($d === 'row' ? 'center' : 'space-between')};
-  list-style: none;
 `;
