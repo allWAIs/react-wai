@@ -1,11 +1,21 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { List } from '../List';
+import { useDirection } from './context';
 
-export function TabPanel({ as, ...restProps }) {
-  const ComponentName = as === 'ul' || as === 'ol' ? List : StyledTabPanel;
+export function TabPanel({ as, direction, ...restProps }) {
+  const defaultDirection = useDirection();
 
-  return <ComponentName as={as} role="tabpanel" {...restProps} />;
+  return as === 'ul' || as === 'ol' ? (
+    <List
+      as={as}
+      role="tabpanel"
+      direction={direction ?? defaultDirection}
+      {...restProps}
+    />
+  ) : (
+    <StyledTabPanel as={as} role="tabpanel" {...restProps} />
+  );
 }
 
 const StyledTabPanel = styled.div``;
@@ -16,4 +26,5 @@ TabPanel.defaultProps = {
 
 TabPanel.propTypes = {
   as: PropTypes.elementType,
+  direction: PropTypes.string,
 };

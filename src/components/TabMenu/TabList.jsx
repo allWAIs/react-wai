@@ -1,25 +1,8 @@
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import { List } from '../List';
+import { useDirection } from './context';
 
-export function TabList({ direction, children, ...restProps }) {
-  return (
-    <StyledTabList role="tablist" $d={direction} {...restProps}>
-      {children}
-    </StyledTabList>
-  );
+export function TabList(props) {
+  const direction = useDirection();
+
+  return <List role="tablist" direction={direction} {...props} />;
 }
-
-const { string, node } = PropTypes;
-TabList.defaultProps = {
-  direction: 'row',
-};
-
-TabList.propTypes = {
-  direction: string,
-  children: node,
-};
-
-const StyledTabList = styled.div`
-  display: flex;
-  flex-direction: ${({ $d }) => ($d === 'row' ? 'row' : 'column')};
-`;

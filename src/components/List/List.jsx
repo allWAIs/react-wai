@@ -19,7 +19,7 @@ export function List({ as, direction, children, ...restProps }) {
   }, []);
 
   const handleKeyDown = (e) => {
-    const key = getCompatibleKey(e, direction);
+    const key = getCompatibleKey(e);
 
     switch (key) {
       case KEYS.HOME:
@@ -36,6 +36,7 @@ export function List({ as, direction, children, ...restProps }) {
       case KEYS.ARROW_RIGHT:
         e.preventDefault();
         arrowNavigation(direction, listItems, key);
+        e.stopPropagation();
         break;
       default:
         break;

@@ -14,6 +14,7 @@ import {
 } from '../../utils';
 import { Title } from '../Title';
 import { getFocusableChildren } from '../../utils/focus-tab';
+import { TabContext } from './context';
 
 export function TabMenu({ as, direction, children, ...restProps }) {
   const containerRef = useRef(null);
@@ -38,6 +39,7 @@ export function TabMenu({ as, direction, children, ...restProps }) {
 
   const initTab = () => {
     const $container = containerRef.current;
+
     tabs = Array.from($container.querySelectorAll('[role="tab"]'));
     tabpanels = Array.from($container.querySelectorAll('[role="tabpanel"]'));
 
@@ -71,7 +73,11 @@ export function TabMenu({ as, direction, children, ...restProps }) {
     } else if (role !== 'tabpanel') {
       const selectedTabId = focusedNode
         .closest('[role="tabpanel"]')
-        .getAttribute('aria-labelledby');
+        ?.getAttribute('aria-labelledby');
+      if (!selectedTabId) {
+        return;
+      }
+
       tabs
         .find((tab) => tab.id === selectedTabId)
         .setAttribute('aria-selected', true);
@@ -82,7 +88,7 @@ export function TabMenu({ as, direction, children, ...restProps }) {
   };
 
   const handleKeyDown = (e) => {
-    const key = getCompatibleKey(e, direction);
+    const key = getCompatibleKey(e);
 
     switch (key) {
       case KEYS.HOME:
@@ -124,17 +130,18 @@ export function TabMenu({ as, direction, children, ...restProps }) {
   };
 
   return (
-    <StyledTabMenu
-      as={as}
-      ref={containerRef}
-      aria-orientation={direction === 'row' ? 'horizontal' : 'vertical'}
-      onFocus={handleFocus}
-      onKeyDown={handleKeyDown}
-      onClick={handleClick}
-      {...restProps}
-    >
-      {children}
-    </StyledTabMenu>
+    <TabContext.Provider value={{ direction }}>
+      <StyledTabMenu
+        as={as}
+        ref={containerRef}
+        onFocus={handleFocus}
+        onKeyDown={handleKeyDown}
+        onClick={handleClick}
+        {...restProps}
+      >
+        {children}
+      </StyledTabMenu>
+    </TabContext.Provider>
   );
 }
 
@@ -146,7 +153,13 @@ TabMenu.defaultProps = {
 const { oneOfType, oneOf, string, node } = PropTypes;
 
 TabMenu.propTypes = {
+  /**
+  네이티브 태그 또는 커스텀 컴포넌트(권장하지는 않음)
+   */
   as: oneOfType([string, node]),
+  /**
+   키보드 네비게이션을 적용하기 위한 탭 방향
+   */
   direction: oneOf(['row', 'col']),
 };
 

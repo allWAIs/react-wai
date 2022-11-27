@@ -27,23 +27,20 @@ const platform =
   navigator?.userAgentData?.platform || navigator?.platform || 'unknown';
 const isMacOS = platform.includes('macOS');
 
-export const getCompatibleKey = (keyEvent, direction) => {
+export const getCompatibleKey = (keyEvent) => {
   const { altKey, metaKey, key } = keyEvent;
   if (!isMacOS) {
     return key;
   }
-  const isVertical = direction === DIRECTION.COL;
+
   if (metaKey) {
-    if (isVertical && key === KEYS.ARROW_UP) return KEYS.HOME;
-    if (isVertical && key === KEYS.ARROW_DOWN) return KEYS.END;
-    if (!isVertical && key === KEYS.ARROW_LEFT) return KEYS.HOME;
-    if (!isVertical && key === KEYS.ARROW_RIGHT) return KEYS.END;
+    if (key === KEYS.ARROW_UP || key === KEYS.ARROW_LEFT) return KEYS.HOME;
+    if (key === KEYS.ARROW_DOWN || key === KEYS.ARROW_RIGHT) return KEYS.END;
   }
   if (altKey) {
-    if (isVertical && key === KEYS.ARROW_UP) return KEYS.PAGE_UP;
-    if (isVertical && key === KEYS.ARROW_DOWN) return KEYS.PAGE_DOWN;
-    if (!isVertical && key === KEYS.ARROW_LEFT) return KEYS.PAGE_UP;
-    if (!isVertical && key === KEYS.ARROW_RIGHT) return KEYS.PAGE_DOWN;
+    if (key === KEYS.ARROW_UP || key === KEYS.ARROW_LEFT) return KEYS.PAGE_UP;
+    if (key === KEYS.ARROW_DOWN || key === KEYS.ARROW_RIGHT)
+      return KEYS.PAGE_DOWN;
   }
   return key;
 };

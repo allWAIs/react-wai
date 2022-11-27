@@ -23,7 +23,7 @@ export function Test() {
           <TabPanel>리스트가 아닌 탭 패널2</TabPanel>
         </TabGroup>
       </TabMenu>
-      <TabMenu>
+      <TabMenu direction="col">
         <Title>탭 패널과 탭이 떨어져 있는 탭 메뉴</Title>
         <TabList>
           <Tab>Taab1</Tab>
