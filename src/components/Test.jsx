@@ -1,35 +1,57 @@
-import styled from 'styled-components';
-import theme from '../utils/theme';
-import { Alert } from './Alert/index';
-import React, { children, useState } from 'react';
-// import addIcon from './../assets/icon/Icon-add.svg'
-// import {ReactComponent as CheckIcon} from './../assets/icon/Icon-check.svg'
-
-// console.log(addIcon, CheckIcon);
-
-// const Button = styled.button`
-//     color:red;
-//     border: 1px solid black;
-// `
+import { Tab, TabGroup, TabList, TabMenu, TabPanel } from './TabMenu';
+import { Title } from './Title/Title';
 
 export function Test() {
-  const [alert, setAlert] = useState(false);
-
-  const showAlert = () => {
-    setAlert(!alert);
-  };
-
   return (
     <>
-      <button className="trigger" onClick={showAlert}>
-        example
-      </button>
-      {alert && (
-        <Alert width="300px" height="100px">
-          내용을 입력하세요😊
-        </Alert>
-      )}
-      <button>1</button>
+      <TabMenu>
+        <Title>탭만 있는 탭 메뉴</Title>
+        <TabList>
+          <Tab>Taab1</Tab>
+          <Tab>Taab2</Tab>
+          <Tab>Taab3</Tab>
+        </TabList>
+      </TabMenu>
+      <TabMenu>
+        <Title>탭 패널과 탭이 묶여있는 탭 메뉴</Title>
+        <TabGroup>
+          <Tab>Tab1</Tab>
+          <TabPanel>리스트가 아닌 탭 패널1</TabPanel>
+        </TabGroup>
+        <TabGroup>
+          <Tab>Tab2</Tab>
+          <TabPanel>리스트가 아닌 탭 패널2</TabPanel>
+        </TabGroup>
+      </TabMenu>
+      <TabMenu direction="col">
+        <Title>탭 패널과 탭이 떨어져 있는 탭 메뉴</Title>
+        <TabList>
+          <Tab>Taab1</Tab>
+          <Tab>Taab2</Tab>
+        </TabList>
+        <TabPanel as="ul">
+          <li>
+            <a href="#">리스트 탭 아이템1</a>
+          </li>
+          <li>
+            <a href="#">리스트 탭 아이템2</a>
+          </li>
+          <li>
+            <a href="#">리스트 탭 아이템3</a>
+          </li>
+        </TabPanel>
+        <TabPanel as="ol">
+          <li>
+            <a href="#">리스트 탭 아이템1</a>
+          </li>
+          <li>
+            <a href="#">리스트 탭 아이템2</a>
+          </li>
+          <li>
+            <a href="#">리스트 탭 아이템3</a>
+          </li>
+        </TabPanel>
+      </TabMenu>
     </>
   );
 }
