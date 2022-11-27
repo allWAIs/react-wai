@@ -1,2 +1,3 @@
-export { Test } from './Test';
-export * from './Alert/index';
+export * from './Test';
+export * from './Alert';
+export * from './List';
