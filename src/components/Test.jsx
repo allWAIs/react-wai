@@ -13,7 +13,9 @@ export function Test() {
   return (
     <>
       <Title>기본값</Title>
-      <Title lv={1}>헤딩 레벨 1</Title>
+      <Title lv={1} style={{ color: 'green' }}>
+        헤딩 레벨 1
+      </Title>
       <Title lv={3} focusable={true}>
         헤딩 레벨 3 포커스 가능
       </Title>
