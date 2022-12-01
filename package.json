@@ -1,26 +1,31 @@
 {
   "type": "module",
   "name": "react-wai",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "description": "This repository maintains the WAI-ARIA Authoring Practices Guide (APG). React WAI Components also maintains the WAI-ARIA Authring Practices Guide (APG).",
-  "main": "index.js",
+  "main": "/index.js",
   "directories": {
     "doc": "docs"
   },
+  "private": false,
   "scripts": {
-    "start": "webpack build --progress -c webpack/dev.js --open",
-    "build": "webpack build --progress -c webpack/dev.js",
+    "build": "webpack build --progress -c webpack/prod.js",
     "dev": "webpack server --progress -c webpack/dev.js",
+    "deploy": "npm run build && cp .npmignore dist/ && cp package.json dist/ && cd dist && code .",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/allWAIs/react-wai.git"
+    "url": "git://github.com/allWAIs/react-wai.git"
   },
-  "keywords": [],
+  "keywords": [
+    "react",
+    "wai",
+    "a11y"
+  ],
   "author": "allWAIs",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/allWAIs/react-wai/issues"
   },
@@ -58,7 +63,7 @@
     "webpack-cli": "4.10.0",
     "webpack-dev-server": "4.11.1"
   },
-  "dependencies": {
+  "peerDependencies": {
     "react": "18.2.0",
     "react-dom": "18.2.0"
   }

@@ -218,4 +218,7 @@ $RECYCLE.BIN/
 # Storybook
 storybook-static/
 
+# public
+public
+
 # End of https://www.toptal.com/developers/gitignore/api/osx,windows,node,visualstudiocode

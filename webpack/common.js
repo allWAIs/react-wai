@@ -1,7 +1,6 @@
 import { resolve } from 'node:path';
-import webpack from 'webpack';
-import { esbuildLoader, svgLoader } from './loaders/index.js'
-import { createHtmlPlugin } from './plugins/index.js';
+
+import { esbuildLoader, svgLoader } from './loaders/index.js';
 
 const commonConfig = {
   target: ['browserslist'],
@@ -11,33 +10,20 @@ const commonConfig = {
     alias: {
       '@': resolve('src'),
     },
-    
   },
-  entry: { 
-    main: {
-      import: resolve('src/main.jsx'),
-      dependOn: ['vendor'],
-    },
-    vendor: ['react', 'react-dom'],    
-  },
-  output: {
-    path: resolve('build'),
-    filename: '[name].bundle.js',
-  },
+
   module: {
     rules: [
       {
         test: /\.(js)|(jsx)|(json)$/,
-        resolve:{
-          fullySpecified:false,
-        }
+        resolve: {
+          fullySpecified: false,
+        },
       },
       esbuildLoader,
-      svgLoader
-    ]
+      svgLoader,
+    ],
   },
-  plugins: [createHtmlPlugin(),
-  new webpack.ProvidePlugin({React:'react'})].filter(Boolean),
 };
 
 export default commonConfig;
