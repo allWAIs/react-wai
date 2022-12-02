@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "react-wai",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "This repository maintains the WAI-ARIA Authoring Practices Guide (APG). React WAI Components also maintains the WAI-ARIA Authring Practices Guide (APG).",
   "main": "/index.js",
   "directories": {
@@ -9,9 +9,10 @@
   },
   "private": false,
   "scripts": {
+    "setPackageJson": "node cleanPackage",
     "build": "webpack build --progress -c webpack/prod.js",
     "dev": "webpack server --progress -c webpack/dev.js",
-    "deploy": "npm run build && cp .npmignore dist/ && cp package.json dist/ && cd dist && code .",
+    "deploy": "npm run build && npm run setPackageJson && cd dist && code . ",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
