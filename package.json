@@ -1,6 +1,6 @@
 {
   "name": "react-wai",
-  "version": "0.0.8",
+  "version": "0.0.12",
   "type": "module",
   "main": "index.js",
   "types": "index.d.ts",
@@ -41,7 +41,7 @@
     "tslib": "^2.0.3",
     "typescript": "^4.0.5"
   },
-  "peerDependencies": {
+  "dependencies": {
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "styled-components": "^5.2.1"
@@ -57,6 +57,7 @@
   "files": [
     "index.js",
     "index.cjs.js",
-    "index.esm.js"
+    "index.esm.js",
+    "index.d.ts"
   ]
 }
