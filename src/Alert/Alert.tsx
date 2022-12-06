@@ -1,4 +1,11 @@
+import React from 'react';
 import styled from 'styled-components';
+
+export interface IAlertProps {
+  width?: string;
+  height?: string;
+  children?: string;
+}
 
 const StyledAlert = styled.div`
   display: flex;
@@ -13,7 +20,7 @@ const StyledAlert = styled.div`
   }
 `;
 
-export function Alert({ width, height, children }) {
+export function Alert({ width, height, children }: IAlertProps): JSX.Element {
   return (
     <StyledAlert role="alert" style={{ width, height }}>
       {children}

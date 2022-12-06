@@ -1,23 +1,14 @@
+import React from 'react';
 import styled, { css } from 'styled-components';
-import { PropTypes } from 'prop-types';
 
-export function A11yHidden({ as, focusable, ...restProps }) {
-  return <StyledA11yHidden as={as} focusable={focusable} {...restProps} />;
+export interface IA11yHiddenProps {
+  as?: string;
+  focusable?: boolean;
+  children?: string;
+  forwardedAs?: string | React.ComponentType<any>;
 }
 
-A11yHidden.defaultProps = {
-  as: 'span',
-  focusable: false,
-};
-
-const { string, elementType, bool, oneOfType } = PropTypes;
-
-A11yHidden.propTypes = {
-  as: oneOfType([string, elementType]),
-  focusable: bool,
-};
-
-const StyledA11yHidden = styled.span`
+const StyledA11yHidden = styled.span<IA11yHiddenProps>`
   overflow: hidden;
   position: ${({ as }) => (as === 'caption' ? 'static' : 'absolute')};
   clip: rect(1px, 1px, 1px, 1px);
@@ -46,3 +37,12 @@ const StyledA11yHidden = styled.span`
         `
       : ''}
 `;
+
+export function A11yHidden(props: IA11yHiddenProps): JSX.Element {
+  return <StyledA11yHidden {...props}> {props.children}</StyledA11yHidden>;
+}
+
+A11yHidden.defaultProps = {
+  as: 'span',
+  focusable: false,
+};
