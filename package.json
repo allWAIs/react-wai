@@ -1,6 +1,6 @@
 {
   "name": "react-wai",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "type": "module",
   "main": "index.js",
   "types": "index.d.ts",
@@ -55,9 +55,6 @@
     "build-storybook": "build-storybook"
   },
   "files": [
-    "index.js",
-    "index.cjs.js",
-    "index.esm.js",
-    "index.d.ts"
+    "*"
   ]
 }
