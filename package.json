@@ -31,7 +31,7 @@
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react": "^7.31.11",
     "install-peers-cli": "^2.2.0",
     "prepend-file": "^2.0.0",
     "prettier": "^2.1.2",

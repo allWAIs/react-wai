@@ -3,15 +3,21 @@ import styled from 'styled-components';
 import { A11yHidden } from '../A11yHidden';
 
 export interface ITitleProps {
-  as?: string;
-  lv?: string;
+  lv: 1 | 2 | 3 | 4 | 5 | 6 | '1' | '2' | '3' | '4' | '5' | '6';
   hidden?: boolean;
   focusable?: boolean;
   children?: string;
+  restProps: unknown[];
   forwardedAs?: string | React.ComponentType<any>;
 }
 
-export function Title({ lv, hidden, focusable, children, ...restProps }: ITitleProps) {
+export function Title({
+  lv,
+  hidden,
+  focusable,
+  children,
+  ...restProps
+}: ITitleProps) {
   const componentName = `h${lv}`;
 
   return hidden ? (
@@ -19,7 +25,11 @@ export function Title({ lv, hidden, focusable, children, ...restProps }: ITitleP
       {children}
     </A11yHidden>
   ) : (
-    <StyledHeading as={componentName} tabIndex={focusable ? 0 : -1} {...restProps}>
+    <StyledHeading
+      as={componentName}
+      tabIndex={focusable ? 0 : -1}
+      {...restProps}
+    >
       {children}
     </StyledHeading>
   );

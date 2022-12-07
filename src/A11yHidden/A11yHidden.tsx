@@ -5,6 +5,7 @@ export interface IA11yHiddenProps {
   as?: string;
   focusable?: boolean;
   children?: string;
+  restProps: unknown[];
   forwardedAs?: string | React.ComponentType<any>;
 }
 
@@ -38,8 +39,17 @@ const StyledA11yHidden = styled.span<IA11yHiddenProps>`
       : ''}
 `;
 
-export function A11yHidden(props: IA11yHiddenProps): JSX.Element {
-  return <StyledA11yHidden {...props}> {props.children}</StyledA11yHidden>;
+export function A11yHidden({
+  as,
+  focusable,
+  children,
+  ...restProps
+}: IA11yHiddenProps): JSX.Element {
+  return (
+    <StyledA11yHidden as={as} focusable={focusable} {...restProps}>
+      {children}
+    </StyledA11yHidden>
+  );
 }
 
 A11yHidden.defaultProps = {
