@@ -7,7 +7,7 @@ export interface ITitleProps {
   hidden?: boolean;
   focusable?: boolean;
   children?: string;
-  restProps: unknown[];
+  restProps?:unknown[];
   forwardedAs?: string | React.ComponentType<any>;
 }
 

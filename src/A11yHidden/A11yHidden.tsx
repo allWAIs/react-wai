@@ -5,7 +5,7 @@ export interface IA11yHiddenProps {
   as?: string;
   focusable?: boolean;
   children?: string;
-  restProps: unknown[];
+  restProps?: unknown[];
   forwardedAs?: string | React.ComponentType<any>;
 }
 
