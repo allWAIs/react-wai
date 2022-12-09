@@ -24,7 +24,7 @@ pnpm install react-wai
 
 ## Usage
 
-```
+```javascript
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Alert } from "react-wai";
