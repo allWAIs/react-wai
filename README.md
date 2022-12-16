@@ -46,4 +46,4 @@ Title
 
 ## Demo
 
-Coming soon...
+[DemoPage](https://allwais.github.io/allWAIs)
