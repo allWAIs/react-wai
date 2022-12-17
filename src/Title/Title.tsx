@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { A11yHidden } from '../A11yHidden';
 
-export interface ITitleProps {
-  lv: 1 | 2 | 3 | 4 | 5 | 6 | '1' | '2' | '3' | '4' | '5' | '6';
+export interface ITitleProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement> {
+  lv?: 1 | 2 | 3 | 4 | 5 | 6 | '1' | '2' | '3' | '4' | '5' | '6';
   hidden?: boolean;
   focusable?: boolean;
   children?: string;
-  restProps?:unknown[];
+  restProps?: unknown[];
   forwardedAs?: string | React.ComponentType<any>;
 }
 
