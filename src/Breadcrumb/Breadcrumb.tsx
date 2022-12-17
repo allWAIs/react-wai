@@ -10,6 +10,7 @@ interface PatialPath {
   href: string;
   map?: { [key: string]: string };
   src: string;
+  current?: boolean;
 }
 interface BreadCrumb {
   src?: string;
@@ -44,20 +45,25 @@ export const StyledBreadcrumb = styled.nav<BreadcrumbSplitter>`
     text-decoration: none;
   }
 `;
-function PatialPath({ ...props }: PatialPath) {
-  if (props.map && props.map[props.src] === '') return null;
+function PatialPath({ map, src, href, current }: PatialPath) {
+  if (map && map[src] === '') return null;
+
   return (
     <li>
-      <a href={props.href}>
-        {props.map ? props.map[props.src] ?? props.map[props.href] : props.src}
-      </a>
+      {current ? (
+        <a href={href} aria-current="page">
+          {map ? map[src] ?? map[href] : src}
+        </a>
+      ) : (
+        <a href={href}>{map ? map[src] ?? map[href] : src}</a>
+      )}
     </li>
   );
 }
 export function Breadcrumb({ ...props }: BreadCrumb) {
   const src = props.src ? new URL(props.src) : window.location;
   let root = props.root ?? src.origin;
-
+  const BreadcrumbArray = src.href.replace(root, '').split('/');
   return (
     <StyledBreadcrumb
       splitter={props.splitter}
@@ -66,15 +72,20 @@ export function Breadcrumb({ ...props }: BreadCrumb) {
     >
       <ol>
         <PatialPath {...props} src={root} href={root} />
-        {src.href
-          .replace(root, '')
-          .split('/')
-          .map((path, idx) => {
-            if (path.trim() !== '') {
-              root += '/' + path;
-              return <PatialPath {...props} src={path} key={idx} href={root} />;
-            } else null;
-          })}
+        {BreadcrumbArray.map((path, idx) => {
+          if (path.trim() !== '') {
+            root += '/' + path;
+            return (
+              <PatialPath
+                {...props}
+                src={path}
+                key={idx}
+                href={root}
+                current={idx === BreadcrumbArray.length - 1}
+              />
+            );
+          } else null;
+        })}
       </ol>
     </StyledBreadcrumb>
   );
