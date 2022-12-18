@@ -42,6 +42,8 @@ root.render(
 
 A11yHidden
 Alert
+Breadcrumb
+Switch
 Title
 
 ## Demo
