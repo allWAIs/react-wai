@@ -1,6 +1,6 @@
 import React from 'react';
 import { KeyboardEvent } from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 interface LinkProps {
     as?:'img',
