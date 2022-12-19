@@ -28,7 +28,7 @@ export const StyledSwitch = styled.div`
 
 const Ball = styled.span<Switch>`
   position: absolute;
-  top: 0px;
+  top: 1px;
   left: 2px;
   display: inline-block;
   border: 1px solid;
