@@ -1,6 +1,7 @@
 {
   "name": "react-wai",
   "version": "0.0.19",
+  "type": "module",
   "main": "index.cjs.js",
   "types": "index.d.ts",
   "module": "index.esm.js",

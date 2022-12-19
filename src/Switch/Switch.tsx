@@ -1,4 +1,4 @@
-import React,{ KeyboardEvent } from 'react';
+import React, { KeyboardEvent } from 'react';
 import styled from '@emotion/styled';
 interface Switch {
   event?: () => void;
@@ -46,10 +46,10 @@ const Ball = styled.span<Switch>`
     border-color: ${(props) => props.border};
   }
 `;
- const StyledTitle = styled.span`
+const StyledTitle = styled.span`
   margin-right: 10px;
 `;
- const Bar = styled.span<Switch>`
+const Bar = styled.span<Switch>`
   position: relative;
   display: inline-block;
   vertical-align: bottom;
