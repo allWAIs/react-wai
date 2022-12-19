@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-export interface IAlertProps {
+export interface AlertProps {
   width?: string;
   height?: string;
   children?: string;
@@ -20,7 +20,7 @@ const StyledAlert = styled.div`
   }
 `;
 
-export function Alert({ width, height, children }: IAlertProps): JSX.Element {
+export function Alert({ width, height, children }: AlertProps): JSX.Element {
   return (
     <StyledAlert role="alert" style={{ width, height }}>
       {children}

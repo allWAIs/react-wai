@@ -2,15 +2,15 @@ import React, { ElementType } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 
-export interface A11yHiddenProps {
+export interface A11yHidden {
   as?: (ElementType<any> & string) | undefined;
   focusable?: boolean;
-  children?: string;
+  children?: string | JSX.Element | JSX.Element[];
   restProps?: unknown[];
   forwardedAs?: string | React.ComponentType<any>;
 }
 
-const StyledA11yHidden = styled.span<A11yHiddenProps>`
+const StyledA11yHidden = styled.span<A11yHidden>`
   overflow: hidden;
   position: ${({ as }) => (as === 'caption' ? 'static' : 'absolute')};
   clip: rect(1px, 1px, 1px, 1px);
@@ -45,7 +45,7 @@ export function A11yHidden({
   focusable,
   children,
   ...restProps
-}: A11yHiddenProps): JSX.Element {
+}: A11yHidden): JSX.Element {
   return (
     <StyledA11yHidden as={as} focusable={focusable} {...restProps}>
       {children}

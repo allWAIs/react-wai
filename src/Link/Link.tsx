@@ -3,21 +3,22 @@ import { KeyboardEvent } from 'react';
 import styled from '@emotion/styled';
 
 interface LinkProps {
-    as?:'img',
-    alt:string,
-    src:string,
-    href:string,
-    children?:React.ReactNode
+  as?: 'img';
+  alt: string;
+  src: string;
+  href: string;
+  children?: React.ReactNode;
 }
 
-function goToLink (event:KeyboardEvent|MouseEvent, url:string) {
-    if ((event as KeyboardEvent)['key']  !== 'Enter' && event.type !== 'click') return;
-    
-    window.location.href = url;
-  
-    event.preventDefault();
-    event.stopPropagation();
-  }
+function goToLink(event: KeyboardEvent | MouseEvent, url: string) {
+  if ((event as KeyboardEvent)['key'] !== 'Enter' && event.type !== 'click')
+    return;
+
+  window.location.href = url;
+
+  event.preventDefault();
+  event.stopPropagation();
+}
 
 const StyledLinkSpan = styled.span`
   :hover,
@@ -49,7 +50,7 @@ const StyledLinkImg = styled.img`
   text-decoration: underline;
 `;
 
-export function Link({ as, alt, src, href, children }:LinkProps) {
+export function Link({ as, alt, src, href, children }: LinkProps) {
   return (
     <>
       {as === 'img' ? (
