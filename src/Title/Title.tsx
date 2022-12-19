@@ -1,24 +1,29 @@
-import React from 'react';
+import React, { ElementType } from 'react';
 import styled from '@emotion/styled';
 import { A11yHidden } from '../A11yHidden';
 
-export interface ITitleProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement> {
+export interface TitleProps
+  extends React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLHeadingElement>,
+    HTMLHeadingElement
+  > {
   lv?: 1 | 2 | 3 | 4 | 5 | 6 | '1' | '2' | '3' | '4' | '5' | '6';
   hidden?: boolean;
   focusable?: boolean;
   children?: string;
   restProps?: unknown[];
+  as?: (ElementType<any> & string) | undefined;
   forwardedAs?: string | React.ComponentType<any>;
 }
 
 export function Title({
-  lv,
+  lv = 2,
   hidden,
   focusable,
   children,
   ...restProps
-}: ITitleProps) {
-  const componentName = `h${lv}`;
+}: TitleProps) {
+  const componentName: `h${typeof lv}` = `h${lv}`;
 
   return hidden ? (
     <A11yHidden as={componentName} focusable={focusable} {...restProps}>

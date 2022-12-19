@@ -1,6 +1,6 @@
-import React, {ElementType} from 'react';
+import React, { ElementType } from 'react';
 import styled from '@emotion/styled';
-import {css} from '@emotion/react';
+import { css } from '@emotion/react';
 
 export interface A11yHiddenProps {
   as?: (ElementType<any> & string) | undefined;
