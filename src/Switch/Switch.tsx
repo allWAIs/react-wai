@@ -1,7 +1,9 @@
-import React,{ KeyboardEvent } from 'react';
-import styled from 'styled-components';
+import React, { KeyboardEvent } from 'react';
+import styled from '@emotion/styled';
+import { A11yHidden } from '../A11yHidden';
 interface Switch {
-  event?: () => void;
+  onClick?: () => void;
+  a11yHidden?: boolean;
   status?: boolean;
   children?: string | JSX.Element;
   text?: string;
@@ -26,7 +28,7 @@ export const StyledSwitch = styled.div`
 
 const Ball = styled.span<Switch>`
   position: absolute;
-  top: 0px;
+  top: 1px;
   left: 2px;
   display: inline-block;
   border: 1px solid;
@@ -46,10 +48,10 @@ const Ball = styled.span<Switch>`
     border-color: ${(props) => props.border};
   }
 `;
- const StyledTitle = styled.span`
+const StyledTitle = styled.span`
   margin-right: 10px;
 `;
- const Bar = styled.span<Switch>`
+const Bar = styled.span<Switch>`
   position: relative;
   display: inline-block;
   vertical-align: bottom;
@@ -69,21 +71,37 @@ export const Text = styled.span`
 `;
 export function Switch(props: Switch) {
   const handleKeyUp = ({ key }: KeyboardEvent<HTMLElement>) => {
-    if (props.event && (key === 'Tab' || key === ' ')) props.event();
+    if (props.onClick && (key === 'Enter' || key === ' ')) props.onClick();
   };
   return (
     <StyledSwitch
-      onClick={props.event}
+      onClick={props.onClick}
       onKeyUp={handleKeyUp}
       tabIndex={0}
       role="switch"
       aria-checked={props.status}
     >
-      <StyledTitle>{props.children}</StyledTitle>
-      <Bar {...props}>
-        <Ball {...props}> </Ball>
-      </Bar>
-      <Text>{props.status ? props.text : props.offText}</Text>
+      {props.a11yHidden ? (
+        <>
+          <A11yHidden>
+            <StyledTitle>{props.children}</StyledTitle>
+          </A11yHidden>
+          <Bar {...props}>
+            <Ball {...props}> </Ball>
+          </Bar>
+          <A11yHidden>
+            <Text>{props.status ? props.text : props.offText}</Text>
+          </A11yHidden>
+        </>
+      ) : (
+        <>
+          <StyledTitle>{props.children}</StyledTitle>
+          <Bar {...props}>
+            <Ball {...props}> </Ball>
+          </Bar>
+          <Text>{props.status ? props.text : props.offText}</Text>
+        </>
+      )}
     </StyledSwitch>
   );
 }
