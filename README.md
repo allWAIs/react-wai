@@ -25,17 +25,16 @@ pnpm install react-wai
 ## Usage
 
 ```javascript
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { Alert } from "react-wai";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { Alert } from 'react-wai';
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Alert>alert this msg</Alert>
   </React.StrictMode>
 );
-
 ```
 
 ## Contents
@@ -48,4 +47,4 @@ Title
 
 ## Demo
 
-[DemoPage](https://allwais.github.io/allWAIs)
+[DemoPage](https://allwais.github.io)

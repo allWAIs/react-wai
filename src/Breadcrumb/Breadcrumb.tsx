@@ -1,10 +1,12 @@
-import React from "react";
-import styled from "@emotion/styled";
+import React from 'react';
+import styled from '@emotion/styled';
 /**
  * type
  */
 interface BreadcrumbSplitter {
   splitter?: string;
+  color?: string;
+  bg?: string;
 }
 interface PatialPath {
   href: string;
@@ -12,12 +14,11 @@ interface PatialPath {
   src: string;
   current?: boolean;
 }
-interface BreadCrumb {
+interface BreadCrumb extends BreadcrumbSplitter {
   src?: string;
   root?: string;
   map?: { [key: string]: string };
   width?: string;
-  splitter?: string;
 }
 /**
  * style
@@ -26,7 +27,7 @@ export const StyledBreadcrumb = styled.nav<BreadcrumbSplitter>`
   padding: 0.8em 1em;
   border: 1px solid hsl(0deg 0% 90%);
   border-radius: 4px;
-  background: hsl(300deg 14% 97%);
+  background: ${(props) => props.bg};
   & ol {
     margin: 0;
     padding-left: 0;
@@ -38,9 +39,12 @@ export const StyledBreadcrumb = styled.nav<BreadcrumbSplitter>`
   & li + li::before {
     margin: 0 0.25em;
     content: ${(props) => `'${props.splitter || '/'}'`};
+    color: ${(props) => props.color};
+  }
+  & a {
+    color: ${(props) => props.color};
   }
   & [aria-current='page'] {
-    color: #000;
     font-weight: 700;
     text-decoration: none;
   }
@@ -60,15 +64,23 @@ function PatialPath({ map, src, href, current }: PatialPath) {
     </li>
   );
 }
-export function Breadcrumb({ ...props }: BreadCrumb) {
+export function Breadcrumb({
+  splitter = '/',
+  width = 'fit-content',
+  color = 'black',
+  bg = 'hsl(300deg 14% 97%)',
+  ...props
+}: BreadCrumb) {
   const src = props.src ? new URL(props.src) : window.location;
   let root = props.root ?? src.origin;
   const BreadcrumbArray = src.href.replace(root, '').split('/');
   return (
     <StyledBreadcrumb
-      splitter={props.splitter}
+      splitter={splitter}
       aria-label="Breadcrumb"
-      style={{ width: props.width }}
+      style={{ width: width }}
+      color={color}
+      bg={bg}
     >
       <ol>
         <PatialPath {...props} src={root} href={root} />
@@ -90,8 +102,3 @@ export function Breadcrumb({ ...props }: BreadCrumb) {
     </StyledBreadcrumb>
   );
 }
-
-Breadcrumb.defaultProps = {
-  width: 'fit-content',
-  splitter: '/',
-};
