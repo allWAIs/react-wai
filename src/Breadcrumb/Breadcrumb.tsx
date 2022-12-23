@@ -34,9 +34,9 @@ export const StyledBreadcrumb = styled.nav<BreadcrumbSplitter>`
     list-style: none;
   }
   & li {
-    display: inline;
+    display: inline-block;
   }
-  & li + li::before {
+  & li:not(:last-child)::after {
     margin: 0 0.25em;
     content: ${(props) => `'${props.splitter || '/'}'`};
     color: ${(props) => props.color};
@@ -51,15 +51,14 @@ export const StyledBreadcrumb = styled.nav<BreadcrumbSplitter>`
 `;
 function PatialPath({ map, src, href, current }: PatialPath) {
   if (map && map[src] === '') return null;
-
   return (
     <li>
       {current ? (
         <a href={href} aria-current="page">
-          {map ? map[src] ?? map[href] : src}
+          {map ? map[src] ?? map[href] ?? src : src}
         </a>
       ) : (
-        <a href={href}>{map ? map[src] ?? map[href] : src}</a>
+        <a href={href}>{map ? map[src] ?? src : src}</a>
       )}
     </li>
   );
