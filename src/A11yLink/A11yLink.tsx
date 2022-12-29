@@ -1,17 +1,20 @@
 import React from 'react';
-import { KeyboardEvent } from 'react';
+import { KeyboardEvent, MouseEvent } from 'react';
 import styled from '@emotion/styled';
 
 interface LinkProps {
   as?: 'img';
-  alt: string;
-  src: string;
+  alt?: string;
+  src?: string;
   href: string;
   children?: React.ReactNode;
 }
 
 function goToLink(event: KeyboardEvent | MouseEvent, url: string) {
-  if ((event as KeyboardEvent)['key'] !== 'Enter' && event.type !== 'click')
+  if (
+    (event as unknown as KeyboardEvent)['key'] !== 'Enter' &&
+    event.type !== 'click'
+  )
     return;
 
   window.location.href = url;
@@ -50,24 +53,36 @@ const StyledLinkImg = styled.img`
   text-decoration: underline;
 `;
 
-export function Link({ as, alt, src, href, children }: LinkProps) {
+export function A11yLink({
+  as,
+  alt,
+  src,
+  children,
+  href,
+  ...restProps
+}: LinkProps) {
+  const handleLinkClick = (e: KeyboardEvent | MouseEvent, url: string) =>
+    goToLink(e, url);
+
   return (
     <>
       {as === 'img' ? (
         <StyledLinkImg
           tabIndex={0}
           role="link"
-          onClick={(e) => goToLink(e as unknown as MouseEvent, href)}
-          onKeyDown={(e) => goToLink(e, href)}
+          onClick={(e) => handleLinkClick(e, href)}
+          onKeyDown={(e) => handleLinkClick(e, href)}
           src={src}
           alt={alt}
+          {...restProps}
         />
       ) : (
         <StyledLinkSpan
           tabIndex={0}
           role="link"
-          onClick={(e) => goToLink(e as unknown as MouseEvent, href)}
-          onKeyDown={(e) => goToLink(e, href)}
+          onClick={(e) => handleLinkClick(e, href)}
+          onKeyDown={(e) => handleLinkClick(e, href)}
+          {...restProps}
         >
           {children}
         </StyledLinkSpan>
@@ -76,6 +91,6 @@ export function Link({ as, alt, src, href, children }: LinkProps) {
   );
 }
 
-Link.defaultProps = {
+A11yLink.defaultProps = {
   as: 'span',
 };
