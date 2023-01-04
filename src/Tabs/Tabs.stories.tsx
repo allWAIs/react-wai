@@ -21,8 +21,8 @@ const tabData = [
 ];
 
 export const Default: ComponentStory<typeof Tabs> = (args) => (
-  <Tabs className="active" {...args}>
-    <Tabs.Title id="tablist-1" className="">
+  <Tabs className="active" {...args} />
+  /* <Tabs.Title id="tablist-1" className="">
       테스트용 탭
     </Tabs.Title>
     <Tabs.List role="tablist" aria-labelledby="tablist-1" className="automatic">
@@ -45,6 +45,5 @@ export const Default: ComponentStory<typeof Tabs> = (args) => (
       >
         {tab.content}
       </Tabs.Panel>
-    ))}
-  </Tabs>
+    ))} */
 );
