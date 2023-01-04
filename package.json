@@ -1,65 +1,60 @@
 {
-  "type": "module",
   "name": "react-wai",
-  "version": "0.0.1",
-  "description": "This repository maintains the WAI-ARIA Authoring Practices Guide (APG). React WAI Components also maintains the WAI-ARIA Authring Practices Guide (APG).",
-  "main": "index.js",
-  "directories": {
-    "doc": "docs"
-  },
-  "scripts": {
-    "start": "webpack build --progress -c webpack/dev.js --open",
-    "build": "webpack build --progress -c webpack/dev.js",
-    "dev": "webpack server --progress -c webpack/dev.js",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
-  },
+  "version": "0.0.23",
+  "type": "module",
+  "main": "index.cjs.js",
+  "types": "index.d.ts",
+  "module": "index.esm.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/allWAIs/react-wai.git"
+    "url": "git://github.com/allWAIs/react-wai.git"
   },
-  "keywords": [],
+  "keywords": [
+    "react",
+    "wai",
+    "a11y"
+  ],
   "author": "allWAIs",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/allWAIs/react-wai/issues"
   },
   "homepage": "https://github.com/allWAIs/react-wai#readme",
   "devDependencies": {
-    "@babel/core": "^7.20.2",
-    "@storybook/addon-actions": "^6.5.13",
-    "@storybook/addon-essentials": "^6.5.13",
-    "@storybook/addon-interactions": "^6.5.13",
-    "@storybook/addon-links": "^6.5.13",
-    "@storybook/builder-webpack4": "^6.5.13",
-    "@storybook/builder-webpack5": "^6.5.13",
-    "@storybook/manager-webpack4": "^6.5.13",
-    "@storybook/manager-webpack5": "^6.5.13",
-    "@storybook/react": "^6.5.13",
-    "@storybook/testing-library": "^0.0.13",
-    "@svgr/webpack": "6.5.1",
-    "babel-loader": "^8.3.0",
-    "clean-webpack-plugin": "4.0.0",
-    "cross-env": "7.0.3",
-    "esbuild-loader": "2.20.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-jsx-a11y": "^6.6.1",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "html-webpack-plugin": "5.5.0",
-    "image-minimizer-webpack-plugin": "3.8.1",
-    "imagemin": "8.0.1",
-    "imagemin-svgo": "10.0.1",
-    "new-url-loader": "0.1.1",
-    "prettier": "2.7.1",
-    "styled-components": "5.3.6",
-    "terser-webpack-plugin": "5.3.6",
-    "webpack": "5.75.0",
-    "webpack-cli": "4.10.0",
-    "webpack-dev-server": "4.11.1"
+    "@storybook/react": "^6.5.14",
+    "@types/react": "^16.9.55",
+    "@types/react-dom": "^16.9.9",
+    "@typescript-eslint/eslint-plugin": "^2.10.0",
+    "@typescript-eslint/parser": "^2.10.0",
+    "concurrently": "^5.3.0",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.31.11",
+    "install-peers-cli": "^2.2.0",
+    "prepend-file": "^2.0.0",
+    "prettier": "^2.1.2",
+    "rollup": "^2.33.1",
+    "rollup-plugin-typescript2": "^0.29.0",
+    "ts-node": "^9.0.0",
+    "tslib": "^2.0.3",
+    "typescript": "^4.0.5"
   },
   "dependencies": {
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
-  }
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
+  },
+  "scripts": {
+    "setPackageJson": "node cleanPackage",
+    "build": "rollup -c",
+    "deploy": "npm run build && npm run setPackageJson && cp README.md dist && cd dist && code . ",
+    "build-watch": "rollup -c -w",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook"
+  },
+  "files": [
+    "*"
+  ]
 }

@@ -43,6 +43,7 @@ bower_components
 build/Release
 
 # Dependency directories
+
 node_modules/
 jspm_packages/
 
@@ -94,6 +95,7 @@ out
 # Nuxt.js build / generate output
 .nuxt
 dist
+
 
 # Gatsby files
 .cache/
@@ -217,5 +219,8 @@ $RECYCLE.BIN/
 
 # Storybook
 storybook-static/
+
+# public
+public
 
 # End of https://www.toptal.com/developers/gitignore/api/osx,windows,node,visualstudiocode

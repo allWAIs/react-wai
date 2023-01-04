@@ -1,36 +1,50 @@
 # React WAI
-This repository maintains the WAI-ARIA Authoring Practices Guide (APG). React WAI Components also maintains the WAI-ARIA Authring Practices Guide (APG).
+
+React WAI is the react components library to improve developer experience. Using React WAI, you can make your website accessible.
+
+## Installing as a package
+
+Using npm:
+
+```
+npm install react-wai
+```
+
+Using yarn:
+
+```
+yarn add react-wai
+```
+
+Using pnpm:
+
+```
+pnpm install react-wai
+```
+
+## Usage
+
+```javascript
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { Alert } from 'react-wai';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <Alert>alert this msg</Alert>
+  </React.StrictMode>
+);
+```
 
 ## Contents
 
-- [ ] Accordion (Sections With Show/Hide Functionality)
-- [ ] Alert
-- [ ] Alert and Message Dialogs
-- [ ] Breadcrumb
-- [ ] Button
-- [ ] Carousel (Slide Show or Image Rotator)
-- [ ] Checkbox
-- [ ] Combobox
-- [ ] Dialog (Modal)
-- [ ] Disclosure (Show/Hide)
-- [ ] Feed
-- [ ] Grids : Interactive Tabular Data and Layout Containers
-- [ ] Landmarks
-- [ ] Link
-- [ ] Listbox
-- [ ] Menu or Menu bar
-- [ ] Menu Button
-- [ ] Meter
-- [ ] Radio Group
-- [ ] Slider
-- [ ] Slider (Multi-Thumb)
-- [ ] Spinbutton
-- [ ] Switch
-- [ ] Table
-- [ ] Tabs
-- [ ] Toolbar
-- [ ] Tooltip Widget
-- [ ] Tree View
-- [ ] Treegrid
-- [ ] Window Splitter
+A11yHidden
+Alert
+Breadcrumb
+Switch
+Title
 
+## Demo
+
+[DemoPage](https://allwais.github.io)
