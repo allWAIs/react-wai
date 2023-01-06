@@ -23,13 +23,13 @@ export const KEYS = {
   ESCAPE: 'Escape',
 };
 
-const platform =
-  navigator?.userAgentData?.platform || navigator?.platform || 'unknown';
-const isMacOS = platform.includes('macOS');
+const isWindows = navigator?.userAgent.toLowerCase().includes('windows');
 
-export const getCompatibleKey = (keyEvent) => {
+export const getCompatibleKey = (
+  keyEvent: React.KeyboardEvent<HTMLUListElement | HTMLOListElement>
+) => {
   const { altKey, metaKey, key } = keyEvent;
-  if (!isMacOS) {
+  if (!isWindows) {
     return key;
   }
 
@@ -45,7 +45,11 @@ export const getCompatibleKey = (keyEvent) => {
   return key;
 };
 
-export const arrowNavigation = (direction, focusableElements, key) => {
+export const arrowNavigation = (
+  direction: 'row' | 'col',
+  focusableElements: HTMLElement[],
+  key: string
+) => {
   const activeElementIdx = focusableElements.findIndex(
     (element) => element === document.activeElement
   );

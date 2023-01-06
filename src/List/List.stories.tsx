@@ -1,5 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { List } from './List';
+import React from 'react';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { List, ListProps } from './List';
 import { ListItem } from './ListItem';
 
 export default {
@@ -18,18 +20,33 @@ export default {
     docs: {
       description: {
         component: `
-        키보드 네비게이션을 지원하는 리스트 컴포넌트
-        - direction prop에 따라 좌우 또는 위아래 방향키로 아이템 탐색
-        - Home/End 키로 리스트의 맨 처음과 마지막 아이템으로 이동
+        키보드 네비게이션을 지원하는 리스트 컴포넌트입니다.
+        - direction prop에 따라 좌우 또는 위아래 방향키로 이동할 수 있습니다.
+        - Home/End 키로 리스트의 맨 처음과 마지막 아이템으로 이동할 수 있습니다.
         `,
       },
     },
   },
+} as ComponentMeta<typeof List>;
+
+const Template: ComponentStory<typeof List> = (args: ListProps) => (
+  <List {...args} />
+);
+
+export const Default = Template.bind({});
+Default.args = {
+  direction: 'col',
+  'data-id': '123',
 };
 
-const Template = (args) => <List {...args} />;
-
 export const RowList = Template.bind({});
+RowList.parameters = {
+  docs: {
+    description: {
+      story: '순서가 없는 리스트 - 가로 방향',
+    },
+  },
+};
 
 export const ColumnList = Template.bind({});
 ColumnList.args = {

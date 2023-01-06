@@ -1,9 +1,14 @@
 import React from 'react';
 
-export const findChildComponent = (Component, children) =>
-  React.Children.toArray(children).find(({ type }) => type === Component);
+export const findChildComponent = (
+  Component: React.ReactElement,
+  children: React.ReactNode
+) => React.Children.toArray(children).find(({ type }) => type === Component);
 
-export const enforceChildComponent = (Component, children) => {
+export const enforceChildComponent = (
+  Component: React.ReactElement,
+  children: React.ReactNode
+) => {
   const isComponentExist = !!findChildComponent(Component, children);
   if (!isComponentExist) {
     throw new Error(
