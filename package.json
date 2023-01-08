@@ -34,7 +34,8 @@
     "install-peers-cli": "^2.2.0",
     "prepend-file": "^2.0.0",
     "prettier": "^2.1.2",
-    "rollup": "^2.33.1",
+    "rollup": "^3.9.0",
+    "rollup-plugin-dts": "^5.1.1",
     "rollup-plugin-typescript2": "^0.29.0",
     "ts-node": "^9.0.0",
     "tslib": "^2.0.3",
@@ -47,9 +48,9 @@
     "react-dom": "^16.14.0"
   },
   "scripts": {
-    "setPackageJson": "node cleanPackage",
     "build": "rollup -c",
-    "deploy": "npm run build && npm run setPackageJson && cp README.md dist && cd dist && code . ",
+    "setFiles": "node cmd/cleanPackage && cp README.md dist && node cmd/deleteFolder",
+    "deploy": "npm run build && npm run setFiles && code dist",
     "build-watch": "rollup -c -w",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook"
