@@ -10,12 +10,13 @@ import {
 export interface ListProps
   extends PropsWithHTMLAttr<HTMLUListElement | HTMLOListElement> {
   /**
-   * 리스트로 사용할 태그를 결정합니다.
+   * Determine type of list tag
    */
   as: 'ul' | 'ol';
   /**
-   * 리스트의 논리적/시각적인 방향과 키보드 네비게이션 방향을 결정합니다.
-   * row를 사용하면 좌우방향키,col을 사용하면 상하방향키로 이동합니다.
+   * Determine logical/visual direction of list.
+   * if direction is row, use arrowleft/arrowright key to move forward/backward
+   * if direction is col, use arrowup/arrowdown key to move forward/backward
    */
   direction: 'row' | 'col';
   children: React.ReactNode;
