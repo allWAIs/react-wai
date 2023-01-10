@@ -11,7 +11,7 @@ export function TabGroup({ children, ...restProps }) {
       children[1].type !== TabPanel
     ) {
       throw new TypeError(
-        `접근성을 지키기 위하여 Tab컴포넌트를 첫번째 자식 컴포넌트로, TapPanel컴포너트를 두번째 자식 컴포넌트로 가져야 합니다. 나머지 Children은 무시됩니다`
+        `접근성을 지키기 위하여 Tab컴포넌트를 첫번째 자식 컴포넌트로, TapPanel컴포넌트를 두번째 자식 컴포넌트로 가져야 합니다. 나머지 Children은 무시됩니다`
       );
     }
   }, []);
