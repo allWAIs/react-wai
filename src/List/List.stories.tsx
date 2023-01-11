@@ -10,7 +10,7 @@ export default {
   args: {
     as: 'ul',
     direction: 'row',
-    children: [1, 2, 3, 4, 5].map((key) => (
+    children: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((key) => (
       <ListItem key={key}>
         <a href="#">ListItem {key}</a>
       </ListItem>
@@ -29,9 +29,7 @@ export default {
   },
 } as ComponentMeta<typeof List>;
 
-const Template: ComponentStory<typeof List> = (args: ListProps) => (
-  <List {...args} />
-);
+const Template: ComponentStory<typeof List> = (args: ListProps) => <List {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {

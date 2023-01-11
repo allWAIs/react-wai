@@ -1,10 +1,5 @@
 /* eslint-disable no-undef */
 
-const DIRECTION = {
-  ROW: 'row',
-  COL: 'col',
-};
-
 export const KEYS = {
   ARROW_UP: 'ArrowUp',
   ARROW_DOWN: 'ArrowDown',
@@ -23,13 +18,11 @@ export const KEYS = {
   ESCAPE: 'Escape',
 };
 
-const isWindows = navigator?.userAgent.toLowerCase().includes('windows');
-
-export const getCompatibleKey = (
-  keyEvent: React.KeyboardEvent<HTMLUListElement | HTMLOListElement>
-) => {
+export const getCompatibleKey = (keyEvent: React.KeyboardEvent<HTMLUListElement | HTMLOListElement>): string => {
   const { altKey, metaKey, key } = keyEvent;
-  if (!isWindows) {
+
+  const isWindows = navigator?.userAgent.toLowerCase().includes('windows');
+  if (isWindows) {
     return key;
   }
 
@@ -39,31 +32,30 @@ export const getCompatibleKey = (
   }
   if (altKey) {
     if (key === KEYS.ARROW_UP || key === KEYS.ARROW_LEFT) return KEYS.PAGE_UP;
-    if (key === KEYS.ARROW_DOWN || key === KEYS.ARROW_RIGHT)
-      return KEYS.PAGE_DOWN;
+    if (key === KEYS.ARROW_DOWN || key === KEYS.ARROW_RIGHT) return KEYS.PAGE_DOWN;
   }
   return key;
 };
 
-export const arrowNavigation = (
-  direction: 'row' | 'col',
-  focusableElements: HTMLElement[],
-  key: string
-) => {
-  const activeElementIdx = focusableElements.findIndex(
-    (element) => element === document.activeElement
-  );
+export const moveFocus = (focusables: HTMLElement[], step: number): void => {
+  const lastElementIdx = focusables.length - 1;
+  const activeElementIdx = focusables.findIndex((element) => element === document.activeElement);
   if (activeElementIdx === -1) {
     return;
   }
 
-  const moveForward = key.includes(
-    direction === DIRECTION.ROW ? KEYS.ARROW_RIGHT : KEYS.ARROW_DOWN
-  );
+  let nextActiveElementIdx = activeElementIdx + step;
+  if (nextActiveElementIdx < 0) nextActiveElementIdx = 0;
+  if (nextActiveElementIdx > lastElementIdx) nextActiveElementIdx = lastElementIdx;
 
-  const nextActiveElementIdx = moveForward
-    ? activeElementIdx + 1
-    : activeElementIdx - 1;
+  focusables[nextActiveElementIdx].focus();
+};
 
-  focusableElements[nextActiveElementIdx]?.focus();
+export const arrowNavigation = (key: string, focusables: HTMLElement[], direction: 'row' | 'col'): void => {
+  if ((direction === 'row' && key === KEYS.ARROW_LEFT) || (direction === 'col' && key === KEYS.ARROW_UP)) {
+    moveFocus(focusables, -1);
+  }
+  if ((direction === 'row' && key === KEYS.ARROW_RIGHT) || (direction === 'col' && key === KEYS.ARROW_DOWN)) {
+    moveFocus(focusables, 1);
+  }
 };
