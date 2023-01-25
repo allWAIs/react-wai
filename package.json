@@ -21,6 +21,9 @@
   },
   "homepage": "https://github.com/allWAIs/react-wai#readme",
   "devDependencies": {
+    "@storybook/addon-essentials": "6.5.14",
+    "@storybook/addon-interactions": "6.5.14",
+    "@storybook/addon-links": "6.5.14",
     "@storybook/react": "^6.5.14",
     "@types/react": "^16.9.55",
     "@types/react-dom": "^16.9.9",
@@ -51,7 +54,7 @@
     "build": "rollup -c",
     "deploy": "npm run build && npm run setPackageJson && cp README.md dist && cd dist && code . ",
     "build-watch": "rollup -c -w",
-    "storybook": "start-storybook -p 6006 -s public",
+    "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
   "files": [
