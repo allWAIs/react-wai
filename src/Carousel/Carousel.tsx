@@ -1,17 +1,27 @@
 import React from 'react';
 import styled from '@emotion/styled';
 
-const CarouselContainer = styled.section`
+const Container = styled.section`
   max-width: 900px;
 `;
-function CarouselController() {
-  return <button>Stop/Play</button>;
+const Tab = styled.div``;
+function Pages() {
+  return <div></div>;
+}
+function Controller() {
+  return (
+    <>
+      <button>Stop/Play</button>
+      <Tab></Tab>
+    </>
+  );
 }
 
 export function Carousel(name: string) {
   return (
-    <CarouselContainer aria-label={name}>
-      <CarouselController></CarouselController>
-    </CarouselContainer>
+    <Container aria-label={name}>
+      <Controller />
+      <Pages />
+    </Container>
   );
 }
