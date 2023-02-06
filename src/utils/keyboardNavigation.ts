@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+export type Direction = 'row' | 'col' | 'none';
 
 export const KEYS = {
   ARROW_UP: 'ArrowUp',
@@ -18,7 +19,18 @@ export const KEYS = {
   ESCAPE: 'Escape',
 };
 
-export const getCompatibleKey = (keyEvent: React.KeyboardEvent<HTMLUListElement | HTMLOListElement>): string => {
+export const NAVIGATION_KEYS = [
+  KEYS.ARROW_UP,
+  KEYS.ARROW_DOWN,
+  KEYS.ARROW_LEFT,
+  KEYS.ARROW_RIGHT,
+  KEYS.HOME,
+  KEYS.END,
+  KEYS.PAGE_UP,
+  KEYS.PAGE_DOWN,
+];
+
+export const getCompatibleKey = (keyEvent: React.KeyboardEvent<HTMLElement>): string => {
   const { altKey, metaKey, key } = keyEvent;
 
   const isWindows = navigator?.userAgent.toLowerCase().includes('windows');
@@ -51,11 +63,19 @@ export const moveFocus = (focusables: HTMLElement[], step: number): void => {
   focusables[nextActiveElementIdx].focus();
 };
 
-export const arrowNavigation = (key: string, focusables: HTMLElement[], direction: 'row' | 'col'): void => {
-  if ((direction === 'row' && key === KEYS.ARROW_LEFT) || (direction === 'col' && key === KEYS.ARROW_UP)) {
+export const arrowNavigation = (key: string, focusables: HTMLElement[], direction: Direction): void => {
+  if (
+    (direction === 'row' && key === KEYS.ARROW_LEFT) ||
+    (direction === 'col' && key === KEYS.ARROW_UP) ||
+    (direction === 'none' && (key === KEYS.ARROW_UP || key === KEYS.ARROW_LEFT))
+  ) {
     moveFocus(focusables, -1);
   }
-  if ((direction === 'row' && key === KEYS.ARROW_RIGHT) || (direction === 'col' && key === KEYS.ARROW_DOWN)) {
+  if (
+    (direction === 'row' && key === KEYS.ARROW_RIGHT) ||
+    (direction === 'col' && key === KEYS.ARROW_DOWN) ||
+    (direction === 'none' && (key === KEYS.ARROW_DOWN || key === KEYS.ARROW_RIGHT))
+  ) {
     moveFocus(focusables, 1);
   }
 };
