@@ -1,5 +1,5 @@
 export * from './theme';
-export * from './focus-tab';
+export * from './focusTab';
 export * from './keyboardNavigation';
 export * from './validation';
 export * from './uuid';
