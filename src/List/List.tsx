@@ -32,6 +32,9 @@ export interface ListProps extends PropsWithHTMLAttr<HTMLUListElement | HTMLOLis
    * Default value is false, Set true when List component is children of ListItem component.
    */
   nested?: boolean;
+  /**
+   * Determine number of items that will be skipped when pageup/pagedown key pressed in keyboard navigation
+   */
   step?: number;
   children: ReactNode;
   [key: string]: unknown;
