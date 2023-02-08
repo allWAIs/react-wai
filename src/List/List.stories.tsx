@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, { useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { List, ListProps } from './List';
 import { ListItem } from './ListItem';
@@ -139,3 +139,88 @@ NestedList.parameters = {
     },
   },
 };
+
+function ListItemChildrenCreator() {
+  const [link, setLink] = useState(['#', '#', '#']);
+
+  const add = () => {
+    setLink((prev) => [...prev, '#']);
+  };
+
+  return (
+    <div>
+      <button onClick={add}>ADD</button>
+      <List>
+        <ListItem style={{ marginRight: '3rem' }}>
+          {link.map((href) => (
+            <a style={{ display: 'block' }} key={Math.random()} href={href}>
+              test
+            </a>
+          ))}
+        </ListItem>
+        <ListItem>
+          {link.map((href) => (
+            <a style={{ display: 'block' }} key={Math.random()} href={href}>
+              test
+            </a>
+          ))}
+        </ListItem>
+      </List>
+    </div>
+  );
+}
+export const ListItemFocusChecker: ComponentStory<typeof ListItemChildrenCreator> = () => <ListItemChildrenCreator />;
+
+const sunday = {
+  day: '일요웹툰',
+  webtoons: ['일요웹툰1', '일요웹툰2', '일요웹툰3'],
+};
+
+function ListCreator() {
+  const [webtoons, setWebtoons] = useState(webtoonData);
+
+  const addList = () => {
+    setWebtoons((prev) => [...prev, sunday]);
+  };
+
+  return (
+    <div>
+      <button onClick={addList}>ADD</button>
+      <List>
+        {webtoons.map(({ day, webtoons }) => (
+          <ListItem key={day + Math.random()} style={{ textAlign: 'center', background: 'yellow' }}>
+            <Title style={{ width: '100%' }}>{day}</Title>
+            <List
+              key={day + Math.random()}
+              style={{
+                listStyle: 'none',
+                margin: '0 16px',
+                padding: '10px',
+                background: 'pink',
+                alignItems: 'center',
+                gap: '10px',
+              }}
+              direction="col"
+              nested
+            >
+              {webtoons.map((title) => (
+                <ListItem
+                  key={title + Math.random()}
+                  style={{ width: '100%', height: '100px', textAlign: 'center', background: 'coral' }}
+                >
+                  <Title lv={3} style={{ width: '100%' }}>
+                    {title}
+                  </Title>
+                  <a href="#">링크1</a>
+                  <a href="#">링크2</a>
+                  <a href="#">링크3</a>
+                </ListItem>
+              ))}
+            </List>
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  );
+}
+export const ListFocusChecker: ComponentStory<typeof ListCreator> = () => <ListCreator />;

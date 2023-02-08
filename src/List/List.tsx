@@ -52,7 +52,6 @@ export function List({
   enforceChildren(ListItem, children);
 
   const containerRef = useRef<HTMLUListElement | HTMLOListElement>(null);
-  const listId = `List-${generateUUID()}`;
 
   let listItems: HTMLElement[] = [];
   let firstTabbable: HTMLElement;
@@ -61,21 +60,21 @@ export function List({
   useEffect(() => {
     const $container = containerRef.current;
     if ($container) {
-      listItems = Array.from($container.querySelectorAll(`[data-list-id="${listId}"]`));
+      listItems = Array.from($container.children) as HTMLElement[];
 
       const tabbableChildren = getTabbableChildren($container);
       firstTabbable = tabbableChildren[0];
-      lastTabbable = tabbableChildren[tabbableChildren.length - 1];
+      lastTabbable = tabbableChildren.at(-1) as HTMLElement;
 
       tabbableChildren.forEach(removeTabbable);
       restoreTabbable(firstTabbable);
     }
-  }, []);
+  }, [children]);
 
   // Tab sequence를 유지하기 위해 한 번에 최대 1개의 ListItem만 tabbable이 되도록 제어한다
 
   const handleFocus = ({ target }: React.FocusEvent<HTMLElement>): void => {
-    const isListItem = target.getAttribute('data-list-id') === listId;
+    const isListItem = listItems.includes(target);
     if (isListItem) {
       listItems.forEach((li) => {
         if (li === target) {
@@ -141,10 +140,9 @@ export function List({
       onFocus={handleFocus}
       onBlur={handleBlur}
       onKeyDown={handleKeyDown}
-      data-list-id={listId}
       {...restProps}
     >
-      {React.Children.map(children, (child) => cloneElement(child as ReactElement, { listId }))}
+      {children}
     </StyledList>
   );
 }
