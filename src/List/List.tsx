@@ -12,6 +12,7 @@ import {
   moveFocus,
   NAVIGATION_KEYS,
   restrictChildren,
+  enforceChildren,
 } from '../utils';
 import { ListItem } from './ListItem';
 
@@ -45,6 +46,7 @@ export function List({
   ...restProps
 }: ListProps): JSX.Element {
   restrictChildren(ListItem, children);
+  enforceChildren(ListItem, children);
 
   const containerRef = useRef<HTMLUListElement | HTMLOListElement>(null);
   const listId = `List-${generateUUID()}`;
@@ -69,11 +71,11 @@ export function List({
 
   // Tab sequence를 유지하기 위해 한 번에 최대 1개의 ListItem만 tabbable이 되도록 제어한다
 
-  const handleFocus = (e: React.FocusEvent): void => {
-    const isListItem = e.target.getAttribute('data-list-id') === listId;
+  const handleFocus = ({ target }: React.FocusEvent<HTMLElement>): void => {
+    const isListItem = target.getAttribute('data-list-id') === listId;
     if (isListItem) {
       listItems.forEach((li) => {
-        if (li === e.target) {
+        if (li === target) {
           restoreTabbable(li);
         } else {
           removeTabbable(li);
