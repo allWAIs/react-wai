@@ -47,6 +47,8 @@ const StyledLinkImg = styled.img`
 
 export function A({ as, alt, src, children, href, ...restProps }: AProps) {
   const handleLinkClick = (e: KeyboardEvent | MouseEvent, url: string) => {
+    e.preventDefault();
+    e.stopPropagation();
     if (
       (e as unknown as KeyboardEvent)['key'] !== 'Enter' &&
       e.type !== 'click'
@@ -55,9 +57,6 @@ export function A({ as, alt, src, children, href, ...restProps }: AProps) {
     }
 
     window.location.href = url;
-
-    e.preventDefault();
-    e.stopPropagation();
   };
 
   return (
