@@ -12,7 +12,7 @@ interface AProps
   src?: string;
   href?: string;
   children?: React.ReactNode;
-  restProps?: unknown[];
+  [key: string]: unknown;
 }
 
 const StyledLinkSpan = styled.span`
