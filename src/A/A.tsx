@@ -1,23 +1,18 @@
 import React from 'react';
-import { KeyboardEvent } from 'react';
+import { KeyboardEvent, MouseEvent } from 'react';
 import styled from '@emotion/styled';
 
-interface LinkProps {
+interface AProps
+  extends React.DetailedHTMLProps<
+    React.HTMLAttributes<HTMLImageElement>,
+    HTMLImageElement
+  > {
   as?: 'img';
-  alt: string;
-  src: string;
-  href: string;
+  alt?: string;
+  src?: string;
+  href?: string;
   children?: React.ReactNode;
-}
-
-function goToLink(event: KeyboardEvent | MouseEvent, url: string) {
-  if ((event as KeyboardEvent)['key'] !== 'Enter' && event.type !== 'click')
-    return;
-
-  window.location.href = url;
-
-  event.preventDefault();
-  event.stopPropagation();
+  [key: string]: unknown;
 }
 
 const StyledLinkSpan = styled.span`
@@ -50,24 +45,39 @@ const StyledLinkImg = styled.img`
   text-decoration: underline;
 `;
 
-export function Link({ as, alt, src, href, children }: LinkProps) {
+export function A({ as, alt, src, children, href, ...restProps }: AProps) {
+  const handleLinkClick = (e: KeyboardEvent | MouseEvent, url: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (
+      (e as unknown as KeyboardEvent)['key'] !== 'Enter' &&
+      e.type !== 'click'
+    ) {
+      return;
+    }
+
+    window.location.href = url;
+  };
+
   return (
     <>
       {as === 'img' ? (
         <StyledLinkImg
           tabIndex={0}
           role="link"
-          onClick={(e) => goToLink(e as unknown as MouseEvent, href)}
-          onKeyDown={(e) => goToLink(e, href)}
+          onClick={(e) => handleLinkClick(e, href as string)}
+          onKeyDown={(e) => handleLinkClick(e, href as string)}
           src={src}
           alt={alt}
+          {...restProps}
         />
       ) : (
         <StyledLinkSpan
           tabIndex={0}
           role="link"
-          onClick={(e) => goToLink(e as unknown as MouseEvent, href)}
-          onKeyDown={(e) => goToLink(e, href)}
+          onClick={(e) => handleLinkClick(e, href as string)}
+          onKeyDown={(e) => handleLinkClick(e, href as string)}
+          {...restProps}
         >
           {children}
         </StyledLinkSpan>
@@ -76,6 +86,6 @@ export function Link({ as, alt, src, href, children }: LinkProps) {
   );
 }
 
-Link.defaultProps = {
+A.defaultProps = {
   as: 'span',
 };
