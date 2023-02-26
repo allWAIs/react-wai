@@ -40,12 +40,7 @@ const StyledA11yHidden = styled.span<A11yHidden>`
       : ''}
 `;
 
-export function A11yHidden({
-  as,
-  focusable,
-  children,
-  ...restProps
-}: A11yHidden): JSX.Element {
+export function A11yHidden({ as, focusable, children, ...restProps }: A11yHidden): JSX.Element {
   return (
     <StyledA11yHidden as={as} focusable={focusable} {...restProps}>
       {children}
