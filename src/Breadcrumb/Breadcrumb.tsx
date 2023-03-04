@@ -1,28 +1,62 @@
 import React from 'react';
 import styled from '@emotion/styled';
 /**
- * type
+ * A splitter is a component that divides a path into two separate paths.
  */
 interface BreadcrumbSplitter {
+  /**
+   * Breadcrumb splitter text
+   */
   splitter?: string;
+  /**
+   * Breadcrumb splitter color
+   */
   color?: string;
+  /**
+   * Breadcrumb splitter background color
+   */
   bg?: string;
 }
+/**
+ * The partial path is a representation of a portion of the breadcrumb."
+ */
 interface PatialPath {
+  /**
+   * The href of breadcrumb path
+   */
   href: string;
+  /**
+   * Path map determines breadcrumb path name
+   */
   map?: { [key: string]: string };
+  /**
+   * Path address
+   */
   src: string;
+  /**
+   * This path address is current address.
+   */
   current?: boolean;
 }
-interface BreadCrumb extends BreadcrumbSplitter {
+interface Breadcrumb extends BreadcrumbSplitter {
+  /**
+   * The address, as indicated by the breadcrumb
+   */
   src?: string;
+  /**
+   * Sets the initial path address.
+   */
   root?: string;
+  /**
+   * An object that represents the overall name of each path in the breadcrumb.
+   */
   map?: { [key: string]: string };
+  /**
+   * It determines breadcrumb background width
+   */
   width?: string;
 }
-/**
- * style
- */
+
 export const StyledBreadcrumb = styled.nav<BreadcrumbSplitter>`
   padding: 0.8em 1em;
   border: 1px solid hsl(0deg 0% 90%);
@@ -63,13 +97,16 @@ function PatialPath({ map, src, href, current }: PatialPath) {
     </li>
   );
 }
+/**
+ * Breadcrumbs are a navigational aid that allows users to keep track of their current location on a website or interface.
+ */
 export function Breadcrumb({
   splitter = '/',
   width = 'fit-content',
   color = 'black',
   bg = 'hsl(300deg 14% 97%)',
   ...props
-}: BreadCrumb) {
+}: Breadcrumb) {
   const src = props.src ? new URL(props.src) : window.location;
   let root = props.root ?? src.origin;
   const BreadcrumbArray = src.href.replace(root, '').split('/');
