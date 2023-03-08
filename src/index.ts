@@ -5,3 +5,4 @@ export { Breadcrumb } from './Breadcrumb';
 export { List, ListItem } from './List';
 export { Switch } from './Switch';
 export { Title } from './Title';
+export { Grid } from './Grid';
