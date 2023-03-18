@@ -1,6 +1,6 @@
-import React, { useEffect, useState, ReactNode } from "react";
-import styled from "@emotion/styled";
-import { Tab } from "./CarouselTab";
+import React, { useEffect, useState, ReactNode } from 'react';
+import styled from '@emotion/styled';
+import { Tab } from './CarouselTab';
 interface IPages extends IContainer {
   /**
    * It determines Carousel Page
@@ -47,7 +47,7 @@ interface ICarousel {
 }
 const Container = styled.section<IContainer>`
   width: 100%;
-  height: ${({ height }) => height ?? "100px"}
+  height: ${({ height }) => height ?? '300px'};
   position: relative;
   overflow: hidden;
 
@@ -65,6 +65,7 @@ const Container = styled.section<IContainer>`
     transform: translate3d(0%, 0, 0);
   }
   ul > * {
+    height: ${({ height }) => height ?? '300px'};
     transition: 0.2s transform;
   }
 `;
@@ -134,25 +135,14 @@ export function Carousel({ name, children, delay, auto, height }: ICarousel) {
     <Container page={page} aria-roledescription="carousel" aria-label={name}>
       <Controller>
         <ControButton
-          aria-label={!play ? "start carousel slide" : "stop carousel slide"}
+          aria-label={!play ? 'start carousel slide' : 'stop carousel slide'}
           onClick={() => setPlay(!play)}
         >
-          {!play ? "▶" : "∥"}
+          {!play ? '▶' : '∥'}
         </ControButton>
-        <Tab
-          n={totalPage}
-          clickEvent={changePage}
-          keyEvent={setPage}
-          current={page.current}
-        />
+        <Tab n={totalPage} clickEvent={changePage} keyEvent={setPage} current={page.current} />
       </Controller>
-      <Pages
-        tabIndex={0}
-        n={totalPage}
-        page={page}
-        onFocus={() => setPause(true)}
-        onBlur={() => setPause(false)}
-      >
+      <Pages tabIndex={0} n={totalPage} page={page} onFocus={() => setPause(true)} onBlur={() => setPause(false)}>
         {children}
       </Pages>
     </Container>
