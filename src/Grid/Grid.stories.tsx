@@ -50,7 +50,7 @@ NestedGrid.args = {
       style={{ position: 'relative', backgroundColor: '#373829' }}
     >
       <span style={{ position: 'absolute', top: 0, color: '#fff' }}>outer-Grid {key}</span>
-      {[1, 2, 3].map((key) => (
+      {[1, 2, 3, 4, 5, 6, 7, 8].map((key) => (
         <Grid key={key} item xs={4} sm={12} style={{ height: '200px', backgroundColor: '#c23843' }}>
           <div style={{ width: '100%', height: '100%', backgroundColor: '#68901a' }}>inner-Grid {key}</div>
         </Grid>

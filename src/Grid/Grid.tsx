@@ -127,6 +127,7 @@ export function Grid(props: GridProps): JSX.Element {
       const updateBreakpoint = (mediaQueryList: MediaQueryList, breakpoint: Breakpoint): void => {
         breakpointStatusRef.current[breakpoint] = mediaQueryList.matches;
         breakpointRef.current = getPriorBreakpoint(breakpointStatusRef.current);
+        console.log($gridTables, breakpointRef.current);
       };
 
       const breakpoints = breakpointKeys;

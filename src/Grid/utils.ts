@@ -1,4 +1,4 @@
-import { Breakpoint, getMediaQueries, getPosition } from '../utils';
+import { Breakpoint, getMediaQueries, getPosition, isSameArray } from '../utils';
 import { css } from '@emotion/react';
 import { GridProps } from './Grid';
 
@@ -77,17 +77,37 @@ export const getGridStyles = ({
 
 const getColumnSize = ($gridItems: HTMLElement[], breakpoint: Breakpoint): GridColumn | null => {
   const dataKey = `rWaiGrid${breakpoint[0].toUpperCase() + breakpoint.slice(1)}`;
-  const itemSize = $gridItems[0].dataset[dataKey];
 
-  if (!itemSize) return null;
-  // TODO: 다양한 정렬 형태를 고려하도록 수정
-  // 현재는 모든 그리드 아이템이 같은 값을 가질 때에만 정렬되었다고 판단
+  // INFO: 현재는 불규칙한 레이아웃에는 키보드네비게이션을 적용하지 않음.
+  // 모든 row의 모양이 같을 때에만 정렬되었다고 판단
 
-  const isAligned = $gridItems.every((item) => item.dataset[dataKey] === itemSize);
+  const hasSize = $gridItems.every(($item) => !!$item.dataset[dataKey]);
+  if (!hasSize) return null;
+
+  const hasAuto = !!$gridItems.some(($item) => $item.dataset[dataKey] === 'auto');
+  if (hasAuto) return 'auto';
+
+  const itemSizes: number[][] = [[]];
+  let accumulatedSize = 0;
+  for (let i = 0; i < $gridItems.length; i++) {
+    const size = Number($gridItems[i].dataset[dataKey]) as number;
+    if (accumulatedSize + size <= 12) {
+      itemSizes.at(-1)?.push(size);
+      accumulatedSize += size;
+    } else {
+      itemSizes.push([size]);
+      accumulatedSize = size;
+    }
+  }
+
+  const isAligned =
+    itemSizes.slice(0, itemSizes.length - 1).every((row) => isSameArray(row, itemSizes[0])) &&
+    itemSizes.at(-1)?.every((val, idx) => val === itemSizes[0][idx]);
   if (!isAligned) {
     return null;
   }
-  return itemSize === 'auto' ? itemSize : ((12 / +itemSize) as GridColumn);
+
+  return itemSizes[0].length as GridColumn;
 };
 
 export type GridTable = HTMLElement[][];

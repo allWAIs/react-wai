@@ -1,4 +1,4 @@
-import React, { cloneElement, ReactElement, ReactNode, useEffect, useRef } from 'react';
+import React, { ReactNode, useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import {
   getFocusableChildren,
@@ -8,7 +8,6 @@ import {
   arrowNavigation,
   removeTabbable,
   restoreTabbable,
-  generateUUID,
   moveFocus,
   NAVIGATION_KEYS,
   restrictChildren,
