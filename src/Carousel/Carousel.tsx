@@ -1,7 +1,8 @@
-import React, { useEffect, useState, ReactNode } from 'react';
-import styled from '@emotion/styled';
-import { Tab } from './CarouselTab';
-interface IPages extends IContainer {
+import { useEffect, useState, ReactNode } from "react";
+import styled from "@emotion/styled";
+import { ControlTab } from "./CarouselTab";
+
+interface CarouselContents extends ContainerProps {
   /**
    * It determines Carousel Page
    */
@@ -9,21 +10,21 @@ interface IPages extends IContainer {
   /**
    * The number of Carousel
    */
-  n: number;
+  entireCarouselPage: number;
+  /**
+   * Carousel page history including prev page number and current page number
+   */
+  pageHistory: { prev: number; current: number };
 }
 
-interface IContainer {
-  /**
-   * Carousel object including prev page number and current page number
-   */
-  page: { prev: number; current: number };
+interface ContainerProps {
   /**
    * Carousel height
    */
   height?: number | string;
 }
 
-interface ICarousel {
+export interface CarouselProps {
   /**
    * Carousel aria label
    */
@@ -39,35 +40,17 @@ interface ICarousel {
   /**
    * Carousel Page
    */
-  children: JSX.Element[];
+  children: JSX.Element[] | JSX.Element;
   /**
    * Carousel height
    */
   height?: number | string;
 }
-const Container = styled.section<IContainer>`
+const Container = styled.section<ContainerProps>`
   width: 100%;
-  height: ${({ height }) => height ?? '300px'};
+  height: ${({ height }) => height ?? "300px"};
   position: relative;
   overflow: hidden;
-
-  ul > *:nth-of-type(-n + ${({ page }) => page.current + 1}) {
-    transform: translate3d(-100%, 0, 0);
-  }
-  ul > *:nth-of-type(n + ${({ page }) => page.current + 1}) {
-    transform: translate3d(100%, 0, 0);
-  }
-  ul > *:nth-of-type(${({ page }) => page.prev + 1}) {
-    opacity: 1;
-  }
-  ul > *:nth-of-type(${({ page }) => page.current + 1}) {
-    opacity: 1;
-    transform: translate3d(0%, 0, 0);
-  }
-  ul > * {
-    height: ${({ height }) => height ?? '300px'};
-    transition: 0.2s transform;
-  }
 `;
 const ControButton = styled.button`
   background: rgb(0 0 0 / 65%);
@@ -81,7 +64,7 @@ const ControButton = styled.button`
   margin-left: 10px;
   border-radius: 5px;
 `;
-const Pages = styled.ul<IPages>`
+const Contents = styled.div<CarouselContents>`
   margin: 0;
   padding: 0;
   width: 100%;
@@ -97,6 +80,24 @@ const Pages = styled.ul<IPages>`
   &:focus {
     border: 1px solid blue;
   }
+
+  & > *:nth-of-type(-n + ${({ pageHistory }) => pageHistory.current + 1}) {
+    transform: translate3d(-100%, 0, 0);
+  }
+  & > *:nth-of-type(n + ${({ pageHistory }) => pageHistory.current + 1}) {
+    transform: translate3d(100%, 0, 0);
+  }
+  & > *:nth-of-type(${({ pageHistory }) => pageHistory.prev + 1}) {
+    opacity: 1;
+  }
+  & > *:nth-of-type(${({ pageHistory }) => pageHistory.current + 1}) {
+    opacity: 1;
+    transform: translate3d(0%, 0, 0);
+  }
+  & > * {
+    height: ${({ height }) => height ?? "300px"};
+    transition: 0.2s transform;
+  }
 `;
 const Controller = styled.div`
   position: absolute;
@@ -108,14 +109,21 @@ const Controller = styled.div`
   text-align: center;
 `;
 
-export function Carousel({ name, children, delay, auto, height }: ICarousel) {
-  const [page, setPage] = useState({ prev: 0, current: 0 });
+export function Carousel({
+  name,
+  children,
+  delay,
+  auto,
+  height,
+}: CarouselProps) {
+  const [pageHistory, setPageHistory] = useState({ prev: 0, current: 0 });
   const [play, setPlay] = useState(auto !== false ?? true);
   const [pause, setPause] = useState(false);
-  const totalPage = children.length;
-
-  const changePage = (to: number) =>
-    setPage(({ current }) => ({
+  const totalPage = Array.isArray(children)
+    ? children.length
+    : children.props.children.length;
+  const onClick = (to: number) =>
+    setPageHistory(({ current }) => ({
       prev: current,
       current: to % totalPage,
     }));
@@ -123,7 +131,7 @@ export function Carousel({ name, children, delay, auto, height }: ICarousel) {
   useEffect(() => {
     if (play && !pause) {
       const timer = setInterval(() => {
-        setPage(({ current }) => ({
+        setPageHistory(({ current }) => ({
           prev: current,
           current: (current + 1) % totalPage,
         }));
@@ -132,19 +140,35 @@ export function Carousel({ name, children, delay, auto, height }: ICarousel) {
     }
   }, [play, pause]);
   return (
-    <Container page={page} aria-roledescription="carousel" aria-label={name}>
+    <Container
+      aria-roledescription="carousel"
+      aria-label={name}
+      height={height}
+    >
       <Controller>
         <ControButton
-          aria-label={!play ? 'start carousel slide' : 'stop carousel slide'}
+          aria-label={!play ? "start carousel slide" : "stop carousel slide"}
           onClick={() => setPlay(!play)}
         >
-          {!play ? '▶' : '∥'}
+          {!play ? "▶" : "∥"}
         </ControButton>
-        <Tab n={totalPage} clickEvent={changePage} keyEvent={setPage} current={page.current} />
+        <ControlTab
+          entireCarouselPage={totalPage}
+          onClick={onClick}
+          keyEvent={setPageHistory}
+          currentPage={pageHistory.current}
+        />
       </Controller>
-      <Pages tabIndex={0} n={totalPage} page={page} onFocus={() => setPause(true)} onBlur={() => setPause(false)}>
+      <Contents
+        tabIndex={0}
+        entireCarouselPage={totalPage}
+        pageHistory={pageHistory}
+        onFocus={() => setPause(true)}
+        onBlur={() => setPause(false)}
+        height={height}
+      >
         {children}
-      </Pages>
+      </Contents>
     </Container>
   );
 }
