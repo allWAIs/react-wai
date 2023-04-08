@@ -16,7 +16,7 @@ export const findChildComponent = <T extends ComponentType<any>>(Component: T, c
 export const enforceChildren = <T extends ComponentType<any>>(Component: T, children: ReactNode): void => {
   const isComponentExist = !!findChildComponent(Component, children);
   if (!isComponentExist) {
-    const errorMessage = navigator.languages.includes('ko')
+    const errorMessage = navigator?.languages.includes('ko')
       ? `웹 접근성을 준수하기 위하여 자식 요소로 ${Component.name} 컴포넌트를 필수적으로 가져야합니다.`
       : `Use ${Component.name} component for children to comply with web accessibility guidelines`;
     throw new Error(errorMessage);
@@ -52,7 +52,7 @@ export const restrictChildren = <T extends ComponentType<any>>(
     validComponentName = allowedComponent.name;
   }
   if (!isValid) {
-    const errorMessage = navigator.languages.includes('ko')
+    const errorMessage = navigator?.languages.includes('ko')
       ? `웹 접근성을 준수하기 위하여 허용된 컴포넌트만 children으로 사용할 수 있습니다.
       사용 가능한 컴포넌트: ${validComponentName}
       사용된 컴포넌트: ${misusedComponent}`
@@ -75,7 +75,7 @@ export const validateElements = (
 };
 
 export const restrictElementsByComponetName = (children: HTMLElement[], allowedComponentName: string): void => {
-  const errorMessage = navigator.languages.includes('ko')
+  const errorMessage = navigator?.languages.includes('ko')
     ? `웹 접근성을 준수하기 위하여 자식 요소로 ${allowedComponentName} 컴포넌트만을 가질 수 있습니다.`
     : `Only following component is allowed for children to comply with web accessibility guidelines.
     allowed components: ${allowedComponentName}`;
