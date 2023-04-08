@@ -1,8 +1,7 @@
-import React, { ReactNode, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import {
   getFocusableChildren,
-  getTabbableChildren,
   KEYS,
   getCompatibleKey,
   arrowNavigation,
@@ -10,10 +9,8 @@ import {
   restoreTabbable,
   moveFocus,
   NAVIGATION_KEYS,
-  restrictChildren,
-  enforceChildren,
+  restrictElementsByComponetName,
 } from '../utils';
-import { ListItem } from './ListItem';
 
 export interface ListProps extends PropsWithHTMLAttr<HTMLUListElement | HTMLOListElement> {
   /**
@@ -35,7 +32,7 @@ export interface ListProps extends PropsWithHTMLAttr<HTMLUListElement | HTMLOLis
    * Determine number of items that will be skipped when pageup/pagedown key pressed in keyboard navigation
    */
   step?: number;
-  children: ReactNode;
+  children: React.ReactNode;
   [key: string]: unknown;
 }
 
@@ -47,35 +44,42 @@ export function List({
   children,
   ...restProps
 }: ListProps): JSX.Element {
-  restrictChildren(ListItem, children);
-  enforceChildren(ListItem, children);
-
   const containerRef = useRef<HTMLUListElement | HTMLOListElement>(null);
 
-  let listItems: HTMLElement[] = [];
-  let firstTabbable: HTMLElement;
-  let lastTabbable: HTMLElement;
+  let $listItems: HTMLElement[] = [];
+  let $firstFocusable: HTMLElement;
+  let $lastFocusable: HTMLElement;
 
   useEffect(() => {
     const $container = containerRef.current;
     if ($container) {
-      listItems = Array.from($container.children) as HTMLElement[];
+      const $children = [...$container.children] as HTMLElement[];
+      restrictElementsByComponetName($children, 'ListItem');
+    }
+  }, [children]);
 
-      const tabbableChildren = getTabbableChildren($container);
-      firstTabbable = tabbableChildren[0];
-      lastTabbable = tabbableChildren.at(-1) as HTMLElement;
+  useEffect(() => {
+    const $container = containerRef.current;
+    if ($container) {
+      $listItems = Array.from($container.children) as HTMLElement[];
 
-      tabbableChildren.forEach(removeTabbable);
-      restoreTabbable(firstTabbable);
+      const $focusableChildren = getFocusableChildren($container);
+      $firstFocusable = $focusableChildren[0];
+      $lastFocusable = $focusableChildren.at(-1) as HTMLElement;
+
+      if (document.activeElement && !$focusableChildren.includes(document.activeElement as HTMLElement)) {
+        $focusableChildren.forEach(removeTabbable);
+        restoreTabbable($firstFocusable);
+      }
     }
   }, [children]);
 
   // Tab sequence를 유지하기 위해 한 번에 최대 1개의 ListItem만 tabbable이 되도록 제어한다
 
   const handleFocus = ({ target }: React.FocusEvent<HTMLElement>): void => {
-    const isListItem = listItems.includes(target);
+    const isListItem = $listItems.includes(target);
     if (isListItem) {
-      listItems.forEach((li) => {
+      $listItems.forEach((li) => {
         if (li === target) {
           restoreTabbable(li);
         } else {
@@ -106,25 +110,25 @@ export function List({
         if (e.ctrlKey && nested) {
           return;
         }
-        e.ctrlKey ? firstTabbable.focus() : listItems[0].focus();
+        e.ctrlKey ? $firstFocusable.focus() : $listItems[0].focus();
         break;
       case KEYS.END:
         if (e.ctrlKey && nested) {
           return;
         }
-        e.ctrlKey ? lastTabbable.focus() : listItems[listItems.length - 1].focus();
+        e.ctrlKey ? $lastFocusable.focus() : $listItems[$listItems.length - 1].focus();
         break;
       case KEYS.PAGE_UP:
-        !e.ctrlKey && moveFocus(listItems, step * -1);
+        !e.ctrlKey && moveFocus($listItems, step * -1);
         break;
       case KEYS.PAGE_DOWN:
-        !e.ctrlKey && moveFocus(listItems, step);
+        !e.ctrlKey && moveFocus($listItems, step);
         break;
       case KEYS.ARROW_UP:
       case KEYS.ARROW_DOWN:
       case KEYS.ARROW_LEFT:
       case KEYS.ARROW_RIGHT:
-        arrowNavigation(key, listItems, direction);
+        arrowNavigation(key, $listItems, direction);
         break;
     }
     e.stopPropagation();
