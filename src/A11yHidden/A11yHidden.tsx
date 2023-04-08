@@ -5,9 +5,8 @@ import { css } from '@emotion/react';
 export interface A11yHidden {
   as?: (ElementType<any> & string) | undefined;
   focusable?: boolean;
-  children?: string | JSX.Element | JSX.Element[];
-  restProps?: unknown[];
-  forwardedAs?: string | React.ComponentType<any>;
+  children: React.ReactNode;
+  [key: string]: unknown;
 }
 
 const StyledA11yHidden = styled.span<A11yHidden>`
