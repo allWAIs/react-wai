@@ -26,12 +26,14 @@ export const Default = Template.bind({});
 Default.args = {
   container: true,
   spacing: 16,
-  style: { width: '400px', backgroundColor: 'pink' },
-  children: [1, 2, 3].map((key) => (
-    <Grid key={key} item xs={2} sm={6} style={{ height: '200px', backgroundColor: '#373829' }}>
-      <div style={{ width: '100%', height: '100%', backgroundColor: '#823843' }}>li {key}</div>
-    </Grid>
-  )),
+  style: { width: '1000px', backgroundColor: 'pink', margin: 0 },
+  children: Array(20)
+    .fill(null)
+    .map((_, key) => (
+      <Grid key={key} item xs={2} xl={6} style={{ height: '200px', backgroundColor: '#373829' }}>
+        <div style={{ width: '100%', height: '100%', backgroundColor: '#823843' }}>li {key}</div>
+      </Grid>
+    )),
 };
 
 export const NestedGrid = Template.bind({});

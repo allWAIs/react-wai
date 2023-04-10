@@ -81,12 +81,18 @@ export interface GridProps extends PropsWithHTMLAttr<HTMLDivElement> {
    * It can only be used on a type container component.
    */
   spacing?: number;
+  /**
+   * Determines number of rows to skip when pageup or pagedown key pressed.
+   * It can only be used on a type container component.
+   */
+  step?: number;
   className?: string;
   children?: React.ReactNode;
+  [key: string]: unknown;
 }
 
 export function Grid(props: GridProps): JSX.Element {
-  const { container, item, xs, sm, md, lg, xl, className, children, ...restProps } = props;
+  const { container, item, xs, sm, md, lg, xl, className, children, step = 5, ...restProps } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const breakpointStatusRef = useRef<Breakpoints<boolean>>({
@@ -112,7 +118,7 @@ export function Grid(props: GridProps): JSX.Element {
 
     if ((role === 'container' || role === 'both') && $container) {
       $gridTables = getGridTables($container);
-      navigators = getGridNavigators($gridTables);
+      navigators = getGridNavigators($gridTables, step);
     }
 
     if (role === 'item' && $container) {
@@ -176,7 +182,7 @@ export function Grid(props: GridProps): JSX.Element {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLElement>): void => {
     const key = getCompatibleKey(e);
-    if (!NAVIGATION_KEYS.includes(key) || role === 'item' || e.target === e.currentTarget) return;
+    if (!NAVIGATION_KEYS.find((k) => k === key) || role === 'item' || e.target === e.currentTarget) return;
 
     const navigator = navigators[breakpointRef.current];
     if (!navigator) return;
@@ -186,6 +192,10 @@ export function Grid(props: GridProps): JSX.Element {
     else if (key === KEYS.ARROW_DOWN) navigator.down();
     else if (key === KEYS.ARROW_LEFT) navigator.left();
     else if (key === KEYS.ARROW_RIGHT) navigator.right();
+    else if (key === KEYS.HOME) e.ctrlKey ? navigator.ctrlHome() : navigator.home();
+    else if (key === KEYS.END) e.ctrlKey ? navigator.ctrlEnd() : navigator.end();
+    else if (key === KEYS.PAGE_UP) !e.ctrlKey && navigator.pageup();
+    else if (key === KEYS.PAGE_DOWN) !e.ctrlKey && navigator.pagedown();
 
     e.stopPropagation();
   };
@@ -195,7 +205,6 @@ export function Grid(props: GridProps): JSX.Element {
   return (
     <Div
       ref={containerRef}
-      role={container ? 'grid' : 'gridcell'}
       css={[containerCss, itemCss]}
       className={`${item ? GRID_ITEM_CLASSNAME : ''} ${className ?? ''}`}
       tabIndex={item ? 0 : undefined}

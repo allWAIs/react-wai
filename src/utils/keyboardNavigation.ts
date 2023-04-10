@@ -17,7 +17,18 @@ export const KEYS = {
   PAGE_UP: 'PageUp',
   PAGE_DOWN: 'PageDown',
   ESCAPE: 'Escape',
-};
+} as const;
+
+export type KeyOfKEYS = keyof typeof KEYS;
+export type ValueOfKEYS = (typeof KEYS)[KeyOfKEYS];
+
+export const COMBINATION_KEYS = {
+  CTRL_HOME: 'Control+Home',
+  CTRL_END: 'Control+End',
+} as const;
+
+export type KeyOfCombinationKeys = keyof typeof COMBINATION_KEYS;
+export type ValueOfCombinationKeys = (typeof COMBINATION_KEYS)[KeyOfCombinationKeys];
 
 export const NAVIGATION_KEYS = [
   KEYS.ARROW_UP,

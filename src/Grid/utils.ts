@@ -1,4 +1,13 @@
-import { Breakpoint, getMediaQueries, getPosition, isSameArray } from '../utils';
+import {
+  Breakpoint,
+  COMBINATION_KEYS,
+  getMediaQueries,
+  getPosition,
+  isSameArray,
+  KEYS,
+  ValueOfCombinationKeys,
+  ValueOfKEYS,
+} from '../utils';
 import { css } from '@emotion/react';
 import { GridProps } from './Grid';
 
@@ -49,7 +58,7 @@ const getGridItemStyles = (sizes: GridProps): string => {
   return Object.entries(sizes)
     .map(
       ([key, size]) => `${mediaQueries[key as Breakpoint]}{
-        ${formatGridItemSize(size)}
+        ${formatGridItemSize(size as GridColumn)}
       }`
     )
     .join('\n');
@@ -145,15 +154,26 @@ export const getGridTables = ($container: HTMLElement): GridTables => {
   }, {});
 };
 
-const moveFocus = ($gridTable: GridTable, direction: 'U' | 'D' | 'L' | 'R') => {
+type MoveFocus = {
+  ($gridTable: GridTable, key: ValueOfKEYS | ValueOfCombinationKeys, step: number): void;
+};
+
+const moveFocus: MoveFocus = ($gridTable, key, step = 5) => {
   const $focused = $gridTable.flat().find(($item) => document.activeElement === $item);
   if ($focused) {
     const { row, col } = getPosition($gridTable, $focused) as { row: number; col: number };
+    const rowLength = $gridTable.length;
 
-    if (direction === 'U') $gridTable[row - 1]?.[col]?.focus();
-    else if (direction === 'D') $gridTable[row + 1]?.[col]?.focus();
-    else if (direction === 'L') $gridTable[row][col - 1]?.focus();
-    else if (direction === 'R') $gridTable[row][col + 1]?.focus();
+    if (key === KEYS.ARROW_UP) $gridTable[row - 1]?.[col]?.focus();
+    else if (key === KEYS.ARROW_DOWN) $gridTable[row + 1]?.[col]?.focus();
+    else if (key === KEYS.ARROW_LEFT) $gridTable[row][col - 1]?.focus();
+    else if (key === KEYS.ARROW_RIGHT) $gridTable[row][col + 1]?.focus();
+    else if (key === KEYS.HOME) $gridTable[row][0]?.focus();
+    else if (key === KEYS.END) $gridTable[row].at(-1)?.focus();
+    else if (key === KEYS.PAGE_UP) $gridTable[row - step < 0 ? 0 : row - step][col]?.focus();
+    else if (key === KEYS.PAGE_DOWN) $gridTable[row + step < rowLength ? row + step : rowLength - 1][col]?.focus();
+    else if (key === COMBINATION_KEYS.CTRL_HOME) $gridTable[0]?.[0]?.focus();
+    else if (key === COMBINATION_KEYS.CTRL_END) $gridTable[rowLength - 1].at(-1)?.focus();
   }
 };
 
@@ -165,29 +185,47 @@ export interface GridNavigators {
   [key: string]: GridNavigator | null;
 }
 
-export const getGridNavigator = ($gridTable: GridTable | null): GridNavigator | null => {
+export const getGridNavigator = ($gridTable: GridTable | null, step: number): GridNavigator | null => {
   if (!$gridTable) return null;
 
   return {
     up() {
-      moveFocus($gridTable, 'U');
+      moveFocus($gridTable, KEYS.ARROW_UP, step);
     },
     down() {
-      moveFocus($gridTable, 'D');
+      moveFocus($gridTable, KEYS.ARROW_DOWN, step);
     },
     left() {
-      moveFocus($gridTable, 'L');
+      moveFocus($gridTable, KEYS.ARROW_LEFT, step);
     },
     right() {
-      moveFocus($gridTable, 'R');
+      moveFocus($gridTable, KEYS.ARROW_RIGHT, step);
+    },
+    home() {
+      moveFocus($gridTable, KEYS.HOME, step);
+    },
+    end() {
+      moveFocus($gridTable, KEYS.END, step);
+    },
+    pageUp() {
+      moveFocus($gridTable, KEYS.PAGE_UP, step);
+    },
+    pageDown() {
+      moveFocus($gridTable, KEYS.PAGE_DOWN, step);
+    },
+    ctrlHome() {
+      moveFocus($gridTable, COMBINATION_KEYS.CTRL_HOME, step);
+    },
+    ctrlEnd() {
+      moveFocus($gridTable, COMBINATION_KEYS.CTRL_END, step);
     },
   };
 };
 
-export const getGridNavigators = ($gridTables: GridTables): GridNavigators => {
+export const getGridNavigators = ($gridTables: GridTables, step: number): GridNavigators => {
   const breakpoints: Breakpoint[] = ['xs', 'sm', 'md', 'lg', 'xl'];
   return breakpoints.reduce<GridNavigators>((navigators, breakpoint) => {
-    navigators[breakpoint] = getGridNavigator($gridTables[breakpoint]);
+    navigators[breakpoint] = getGridNavigator($gridTables[breakpoint], step);
     return navigators;
   }, {});
 };
