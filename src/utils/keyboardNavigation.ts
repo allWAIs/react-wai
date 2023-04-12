@@ -42,7 +42,7 @@ export const NAVIGATION_KEYS = [
 ];
 
 export const getCompatibleKey = (keyEvent: React.KeyboardEvent<HTMLElement>): string => {
-  const { altKey, metaKey, key } = keyEvent;
+  const { metaKey, key } = keyEvent;
 
   const isWindows = navigator?.userAgent.toLowerCase().includes('windows');
   if (isWindows) {
@@ -50,12 +50,8 @@ export const getCompatibleKey = (keyEvent: React.KeyboardEvent<HTMLElement>): st
   }
 
   if (metaKey) {
-    if (key === KEYS.ARROW_UP || key === KEYS.ARROW_LEFT) return KEYS.HOME;
-    if (key === KEYS.ARROW_DOWN || key === KEYS.ARROW_RIGHT) return KEYS.END;
-  }
-  if (altKey) {
-    if (key === KEYS.ARROW_UP || key === KEYS.ARROW_LEFT) return KEYS.PAGE_UP;
-    if (key === KEYS.ARROW_DOWN || key === KEYS.ARROW_RIGHT) return KEYS.PAGE_DOWN;
+    if (key === KEYS.ARROW_UP) return KEYS.HOME;
+    if (key === KEYS.ARROW_DOWN) return KEYS.END;
   }
   return key;
 };
