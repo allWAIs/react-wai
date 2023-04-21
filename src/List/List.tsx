@@ -138,7 +138,6 @@ export function List({
     <StyledList
       as={as}
       ref={containerRef}
-      aria-orientation={direction === 'row' ? 'horizontal' : 'vertical'}
       direction={direction}
       onFocus={handleFocus}
       onBlur={handleBlur}
