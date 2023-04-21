@@ -1,5 +1,6 @@
-import { Dispatch, KeyboardEvent, SetStateAction } from "react";
-import styled from "@emotion/styled";
+import React from 'react';
+import { Dispatch, KeyboardEvent, SetStateAction } from 'react';
+import styled from '@emotion/styled';
 interface PaginationProps {
   /**
    * Control tab button Event
@@ -34,23 +35,30 @@ interface NavigationProps {
    */
   width: number;
 }
-const CircleSvg = styled.svg`
-  &:hover {
+const CircleButton = styled.button`
+  border: none;
+  background: none;
+  padding: 0;
+  border: 0;
+  height: -webkit-fill-available;
+  & svg:hover {
     fill: rgb(31, 31, 31);
   }
 `;
 function Pagination({ onClick, isCurrent }: PaginationProps) {
   return (
-    <CircleSvg
-      width="30"
-      height="30"
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-      onClick={onClick}
-      fill={isCurrent ? "rgb(73, 73, 73)" : "rgb(175, 175, 175)"}
-    >
-      <circle cx="15" cy="15" r="8" />
-    </CircleSvg>
+    <CircleButton type="button">
+      <svg
+        width="30"
+        height="30"
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        onClick={onClick}
+        fill={isCurrent ? 'rgb(73, 73, 73)' : 'rgb(175, 175, 175)'}
+      >
+        <circle cx="15" cy="15" r="8" />
+      </svg>
+    </CircleButton>
   );
 }
 const Navigation = styled.div<NavigationProps>`
@@ -61,22 +69,14 @@ const Navigation = styled.div<NavigationProps>`
   width: ${({ width }) => width * 30}px;
   background-color: rgb(0 0 0 / 65%);
 `;
-export function ControlTab({
-  entireCarouselPage,
-  onClick,
-  keyEvent,
-  currentPage,
-}: ControlTabProps) {
+export function ControlTab({ entireCarouselPage, onClick, keyEvent, currentPage }: ControlTabProps) {
   const onKeyDown = ({ key }: KeyboardEvent) => {
-    if (key === "ArrowLeft")
+    if (key === 'ArrowLeft')
       keyEvent(({ current }) => ({
         prev: current,
-        current:
-          current > 0
-            ? (current - 1) % entireCarouselPage
-            : entireCarouselPage - 1,
+        current: current > 0 ? (current - 1) % entireCarouselPage : entireCarouselPage - 1,
       }));
-    if (key === "ArrowRight")
+    if (key === 'ArrowRight')
       keyEvent(({ current }) => ({
         prev: current,
         current: (current + 1) % entireCarouselPage,
@@ -85,11 +85,7 @@ export function ControlTab({
   return (
     <Navigation width={entireCarouselPage} tabIndex={0} onKeyDown={onKeyDown}>
       {Array.from({ length: entireCarouselPage }).map((_, i) => (
-        <Pagination
-          key={i}
-          onClick={() => onClick(i)}
-          isCurrent={i === currentPage}
-        />
+        <Pagination key={i} onClick={() => onClick(i)} isCurrent={i === currentPage} />
       ))}
     </Navigation>
   );

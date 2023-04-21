@@ -1,6 +1,6 @@
-import { useEffect, useState, ReactNode } from "react";
-import styled from "@emotion/styled";
-import { ControlTab } from "./CarouselTab";
+import { useEffect, useState, ReactNode } from 'react';
+import styled from '@emotion/styled';
+import { ControlTab } from './CarouselTab';
 
 interface CarouselContents extends ContainerProps {
   /**
@@ -28,7 +28,7 @@ export interface CarouselProps {
   /**
    * Carousel aria label
    */
-  name?: string;
+  name: string;
   /**
    * Carousel page slide delay
    */
@@ -48,11 +48,11 @@ export interface CarouselProps {
 }
 const Container = styled.section<ContainerProps>`
   width: 100%;
-  height: ${({ height }) => height ?? "300px"};
+  height: ${({ height }) => height ?? '300px'};
   position: relative;
   overflow: hidden;
 `;
-const ControButton = styled.button`
+const ControlButton = styled.button`
   background: rgb(0 0 0 / 65%);
   border: 0;
   color: white;
@@ -95,7 +95,7 @@ const Contents = styled.div<CarouselContents>`
     transform: translate3d(0%, 0, 0);
   }
   & > * {
-    height: ${({ height }) => height ?? "300px"};
+    height: ${({ height }) => height ?? '300px'};
     transition: 0.2s transform;
   }
 `;
@@ -109,19 +109,11 @@ const Controller = styled.div`
   text-align: center;
 `;
 
-export function Carousel({
-  name,
-  children,
-  delay,
-  auto,
-  height,
-}: CarouselProps) {
+export function Carousel({ name, children, delay, auto = true, height }: CarouselProps) {
   const [pageHistory, setPageHistory] = useState({ prev: 0, current: 0 });
-  const [play, setPlay] = useState(auto !== false ?? true);
+  const [play, setPlay] = useState(!!auto);
   const [pause, setPause] = useState(false);
-  const totalPage = Array.isArray(children)
-    ? children.length
-    : children.props.children.length;
+  const totalPage = Array.isArray(children) ? children.length : children.props.children.length;
   const onClick = (to: number) =>
     setPageHistory(({ current }) => ({
       prev: current,
@@ -129,6 +121,7 @@ export function Carousel({
     }));
 
   useEffect(() => {
+    console.log(play, pause);
     if (play && !pause) {
       const timer = setInterval(() => {
         setPageHistory(({ current }) => ({
@@ -140,18 +133,14 @@ export function Carousel({
     }
   }, [play, pause]);
   return (
-    <Container
-      aria-roledescription="carousel"
-      aria-label={name}
-      height={height}
-    >
+    <Container aria-roledescription="carousel" aria-label={name} height={height}>
       <Controller>
-        <ControButton
-          aria-label={!play ? "start carousel slide" : "stop carousel slide"}
+        <ControlButton
+          aria-label={!play ? 'start carousel slide' : 'stop carousel slide'}
           onClick={() => setPlay(!play)}
         >
-          {!play ? "▶" : "∥"}
-        </ControButton>
+          {!play ? '▶' : '∥'}
+        </ControlButton>
         <ControlTab
           entireCarouselPage={totalPage}
           onClick={onClick}
