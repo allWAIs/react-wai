@@ -1,6 +1,6 @@
 # Contributing to react-wai
 
-Thank you for wanting to contribute to the react-wai project!
+This document is about rules and details for to contribute to the react-wai project.
 
 ## Table of contents
 
@@ -26,7 +26,6 @@ Bugs are tracked on the [project issues page](https://github.com/allWAIs/react-w
 
 - Use a clear and descriptive title.
 - Describe the specific steps that reproduce the problem with as many details as possible so that someone can verify the issue.
-- Describe the behavior you observed, and the behavior you had expected.
 - Include screenshots if they help make the issue clear.
 
 ## Asking questions
@@ -37,15 +36,21 @@ If you have questions about the project, using react-wai, or anything else, plea
 
 If you would like to contribute to react-wai, but you aren't sure where to begin, here are some suggestions.
 
-- **Read over the existing documentation.** Are there things missing, or could they be clearer? Make some changes/additions to those documents.
-- **Review the open issues.** Are they clear? Can you reproduce them? You can add comments, clarifications, or additions to those issues. If you think you have an idea of how to address the issue, submit a fix!
-- **Look over the open pull requests.** Do you have comments or suggestions for the proposed changes? Add them.
-- **Check out the examples.** Is there a use case that would be good to have sample code for? Create an example for it.
+- Bug Report
+- Communicate opinions through community activities
+- Modifying or translating project documents
+- Feature update and modification request
+- Update request
+- Committer or Contributor Activity
 
 ## License terms for contributions
 
 This Project welcomes contributions, suggestions, and feedback. All contributions, suggestions, and feedback you submitted are accepted under the [MIT](./LICENSE) license. You represent that if you do not own copyright in the code that you have the authority to submit it under the [MIT](./LICENSE) license. All feedback, suggestions, or contributions are not confidential.
 
-## Becoming a maintainer
+## Issue Management Rules
 
-Contributors are invited to be maintainers of the project by demonstrating good decision making in their contributions, a commitment to the goals of the project, and consistent adherence to the [code of conduct](./CODE-OF-CONDUCT.md). New maintainers are invited by a 3/4 vote of the existing maintainers.
+If an issue has already been resolved or does not require a resolution, it will be closed. Important issues that cannot be resolved in the short term will be kept open.
+
+## Pull Request Management Rules
+
+A pull request will be merged if it has two or more approvals. If comments are made on the PR but there are no additional comments for three months, the issue will be closed.
