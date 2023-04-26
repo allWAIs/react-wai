@@ -1,4 +1,4 @@
-import { useEffect, useState, ReactNode } from 'react';
+import React, { useEffect, useState, ReactNode } from 'react';
 import styled from '@emotion/styled';
 import { ControlTab } from './CarouselTab';
 
@@ -136,7 +136,7 @@ export function Carousel({ name, children, delay, auto = true, height }: Carouse
     <Container aria-roledescription="carousel" aria-label={name} height={height}>
       <Controller>
         <ControlButton
-          aria-label={!play ? 'start carousel slide' : 'stop carousel slide'}
+          aria-label={!play ? 'play carousel slide' : 'pause carousel slide'}
           onClick={() => setPlay(!play)}
         >
           {!play ? '▶' : '∥'}

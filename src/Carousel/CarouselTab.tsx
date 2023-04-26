@@ -10,6 +10,10 @@ interface PaginationProps {
    * Control tab current page
    */
   isCurrent: boolean;
+  /**
+   * Slide number
+   */
+  slideNumber: number;
 }
 interface ControlTabProps {
   /**
@@ -45,9 +49,9 @@ const CircleButton = styled.button`
     fill: rgb(31, 31, 31);
   }
 `;
-function Pagination({ onClick, isCurrent }: PaginationProps) {
+function Pagination({ onClick, isCurrent, slideNumber }: PaginationProps) {
   return (
-    <CircleButton type="button">
+    <CircleButton type="button" aria-label={'Go to slide ' + slideNumber}>
       <svg
         width="30"
         height="30"
@@ -85,7 +89,7 @@ export function ControlTab({ entireCarouselPage, onClick, keyEvent, currentPage 
   return (
     <Navigation width={entireCarouselPage} tabIndex={0} onKeyDown={onKeyDown}>
       {Array.from({ length: entireCarouselPage }).map((_, i) => (
-        <Pagination key={i} onClick={() => onClick(i)} isCurrent={i === currentPage} />
+        <Pagination slideNumber={i + 1} key={i} onClick={() => onClick(i)} isCurrent={i === currentPage} />
       ))}
     </Navigation>
   );
