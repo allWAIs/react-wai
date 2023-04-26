@@ -53,4 +53,4 @@ If an issue has already been resolved or does not require a resolution, it will 
 
 ## Pull Request Management Rules
 
-A pull request will be merged if it has two or more approvals. If comments are made on the PR but there are no additional comments for three months, the issue will be closed.
+A pull request will be merged if it has two or more approvals. If comments are made on the PR but there are no additional comments for two weeks, the issue will be closed.
