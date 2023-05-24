@@ -100,7 +100,7 @@ export function List({
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLUListElement | HTMLOListElement>): void => {
     const key = getCompatibleKey(e);
-    if (!NAVIGATION_KEYS.includes(key)) return;
+    if (!NAVIGATION_KEYS.find((k) => k === key)) return;
 
     e.preventDefault();
     // List 컴포넌트에서는 ListItem(li 태그) 사이 키보드 네비게이션만을 제어한다.
